@@ -18,7 +18,7 @@
 #
 
 
-from distutils.version import StrictVersion
+from distutils.version import LooseVersion
 from distutils.core import setup, Extension
 
 from ctypes.util import find_library
@@ -37,7 +37,7 @@ min_libev_version = "4.15"
 version_error = "Aborted: pyev-{0} requires {{0}} >= {{1}}".format(pyev_version)
 
 def check_version(current_version, minimum_version, name):
-    if StrictVersion(current_version) < StrictVersion(minimum_version):
+    if LooseVersion(current_version) < LooseVersion(minimum_version):
         raise SystemExit(version_error.format(name, minimum_version))
 
 
