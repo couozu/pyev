@@ -1,0 +1,221 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Scheduler — Scheduler watcher &mdash; pyev 0.9.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyev 0.9.0 documentation" href="index.html" />
+    <link rel="up" title="Watchers" href="Watcher.html" />
+    <link rel="next" title="Signal — Signal watcher" href="Signal.html" />
+    <link rel="prev" title="Periodic — Periodic watcher" href="Periodic.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Signal.html" title="Signal — Signal watcher"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Periodic.html" title="Periodic — Periodic watcher"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" accesskey="U">Watchers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="scheduler-scheduler-watcher">
+<span id="scheduler"></span><h1><a class="reference internal" href="#pyev.Scheduler" title="pyev.Scheduler"><tt class="xref py py-class docutils literal"><span class="pre">Scheduler</span></tt></a> &#8212; Scheduler watcher<a class="headerlink" href="#scheduler-scheduler-watcher" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyev.Scheduler">
+<em class="property">class </em><tt class="descclassname">pyev.</tt><tt class="descname">Scheduler</tt><big>(</big><em>scheduler</em>, <em>loop</em>, <em>callback</em><span class="optional">[</span>, <em>data=None</em>, <em>priority=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Scheduler" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>scheduler</strong> (<em>callable</em>) &#8211; reschedule callback. See <a class="reference internal" href="#pyev.Scheduler.scheduler" title="pyev.Scheduler.scheduler"><tt class="xref py py-attr docutils literal"><span class="pre">scheduler</span></tt></a>.</li>
+<li><strong>loop</strong> (<a class="reference internal" href="Loop.html#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a>) &#8211; loop object responsible for this watcher (accessible through
+<a class="reference internal" href="Watcher.html#pyev.Watcher.loop" title="pyev.Watcher.loop"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.loop</span></tt></a>).</li>
+<li><strong>callback</strong> (<em>callable</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.callback" title="pyev.Watcher.callback"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.callback</span></tt></a>.</li>
+<li><strong>data</strong> (<em>object</em>) &#8211; any Python object you might want to attach to the
+watcher (stored in <a class="reference internal" href="Watcher.html#pyev.Watcher.data" title="pyev.Watcher.data"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.data</span></tt></a>).</li>
+<li><strong>priority</strong> (<em>int</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.priority" title="pyev.Watcher.priority"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.priority</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#pyev.Scheduler" title="pyev.Scheduler"><tt class="xref py py-class docutils literal"><span class="pre">Scheduler</span></tt></a> watchers are specialised <a class="reference internal" href="Periodic.html#pyev.Periodic" title="pyev.Periodic"><tt class="xref py py-class docutils literal"><span class="pre">Periodic</span></tt></a> watchers.
+Each time the <a class="reference internal" href="#pyev.Scheduler" title="pyev.Scheduler"><tt class="xref py py-class docutils literal"><span class="pre">Scheduler</span></tt></a> gets scheduled, the reshedule callback
+(<a class="reference internal" href="#pyev.Scheduler.scheduler" title="pyev.Scheduler.scheduler"><tt class="xref py py-attr docutils literal"><span class="pre">scheduler</span></tt></a>) will be called with the watcher as first, and the
+current time as second argument. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">myscheduler</span><span class="p">(</span><span class="n">watcher</span><span class="p">,</span> <span class="n">now</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">now</span> <span class="o">+</span> <span class="mf">60.0</span>
+
+<span class="n">Scheduler</span><span class="p">(</span><span class="n">myscheduler</span><span class="p">,</span> <span class="o">...</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This can be used to create very complex timers, such as a timer that
+triggers on &#8216;next midnight, local time&#8217;. To do this, you would calculate the
+next midnight after <em>now</em> and return the timestamp value for this. This
+cannot be done with <a class="reference internal" href="Timer.html#pyev.Timer" title="pyev.Timer"><tt class="xref py py-class docutils literal"><span class="pre">Timer</span></tt></a> watchers, as those cannot react to
+time jumps.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#code_ev_periodic_code_to_cron_or_not">ev_periodic - to cron or not to cron?</a></p>
+</div>
+<dl class="method">
+<dt id="pyev.Scheduler.reset">
+<tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#pyev.Scheduler.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simply stops and restarts the periodic watcher again. This is only
+useful when <a class="reference internal" href="#pyev.Scheduler.scheduler" title="pyev.Scheduler.scheduler"><tt class="xref py py-attr docutils literal"><span class="pre">scheduler</span></tt></a> would return a different time than the
+last time it was called (e.g. in a crond like program when the crontabs
+have changed).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Scheduler.scheduler">
+<tt class="descname">scheduler</tt><a class="headerlink" href="#pyev.Scheduler.scheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current reschedule callback. Can be changed any time.</p>
+<p>Its signature must be:</p>
+<dl class="method">
+<dt>
+<tt class="descname">scheduler</tt><big>(</big><em>watcher</em>, <em>now</em><big>)</big> &rarr; float</dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>watcher</strong> (<a class="reference internal" href="#pyev.Scheduler" title="pyev.Scheduler"><tt class="xref py py-class docutils literal"><span class="pre">Scheduler</span></tt></a>) &#8211; this watcher.</li>
+<li><strong>now</strong> (<em>float</em>) &#8211; the current time.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>It <strong>must</strong> return a <tt class="xref py py-class docutils literal"><span class="pre">float</span></tt> greater than or equal to the <em>now</em>
+argument to indicate the next time the watcher callback should be
+scheduled. It will usually be called just before the callback will be
+triggered, but might be called at other times, too.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<ul class="last simple">
+<li>This callback <strong>must not</strong> stop or destroy any watcher, ever, or
+make <strong>any</strong> other event loop modifications whatsoever. If you
+need to stop it, return <tt class="docutils literal"><span class="pre">now</span> <span class="pre">+</span> <span class="pre">1e+30</span></tt> and stop it afterwards
+(e.g. by starting a <a class="reference internal" href="Prepare_Check.html#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a> watcher, which is the only
+event loop modification you are allowed to do).</li>
+<li>If the reshedule callback raises an error, or returns anything but
+a <tt class="xref py py-class docutils literal"><span class="pre">float</span></tt>, pyev will stop this watcher.</li>
+</ul>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Scheduler.at">
+<tt class="descname">at</tt><a class="headerlink" href="#pyev.Scheduler.at" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>When the watcher is active, this is the absolute time that this watcher
+is supposed to trigger next.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Periodic.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">Periodic</span></tt> &#8212; Periodic watcher</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Signal.html"
+                        title="next chapter"><tt class="docutils literal docutils literal"><span class="pre">Signal</span></tt> &#8212; Signal watcher</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Scheduler.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Signal.html" title="Signal — Signal watcher"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Periodic.html" title="Periodic — Periodic watcher"
+             >previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" >Watchers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

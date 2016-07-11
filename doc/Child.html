@@ -1,0 +1,213 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Child — Child watcher &mdash; pyev 0.9.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyev 0.9.0 documentation" href="index.html" />
+    <link rel="up" title="Watchers" href="Watcher.html" />
+    <link rel="next" title="Idle — Idle watcher" href="Idle.html" />
+    <link rel="prev" title="Signal — Signal watcher" href="Signal.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Idle.html" title="Idle — Idle watcher"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Signal.html" title="Signal — Signal watcher"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" accesskey="U">Watchers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="child-child-watcher">
+<span id="child"></span><h1><a class="reference internal" href="#pyev.Child" title="pyev.Child"><tt class="xref py py-class docutils literal"><span class="pre">Child</span></tt></a> &#8212; Child watcher<a class="headerlink" href="#child-child-watcher" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyev.Child">
+<em class="property">class </em><tt class="descclassname">pyev.</tt><tt class="descname">Child</tt><big>(</big><em>pid</em>, <em>trace</em>, <em>loop</em>, <em>callback</em><span class="optional">[</span>, <em>data=None</em>, <em>priority=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Child" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pid</strong> (<em>int</em>) &#8211; wait for status changes of process <em>pid</em> (or any process
+if <em>pid</em> is specified as <tt class="docutils literal"><span class="pre">0</span></tt>).</li>
+<li><strong>trace</strong> (<em>bool</em>) &#8211; if <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> only activate the watcher when
+the process terminates, if <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> additionally activate
+the watcher when the process is stopped or continued.</li>
+<li><strong>loop</strong> (<a class="reference internal" href="Loop.html#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a>) &#8211; <strong>must be the default loop</strong>. loop object responsible for this
+watcher (accessible through <a class="reference internal" href="Watcher.html#pyev.Watcher.loop" title="pyev.Watcher.loop"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.loop</span></tt></a>).</li>
+<li><strong>callback</strong> (<em>callable</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.callback" title="pyev.Watcher.callback"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.callback</span></tt></a>.</li>
+<li><strong>data</strong> (<em>object</em>) &#8211; any Python object you might want to attach to the
+watcher (stored in <a class="reference internal" href="Watcher.html#pyev.Watcher.data" title="pyev.Watcher.data"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.data</span></tt></a>).</li>
+<li><strong>priority</strong> (<em>int</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.priority" title="pyev.Watcher.priority"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.priority</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#pyev.Child" title="pyev.Child"><tt class="xref py py-class docutils literal"><span class="pre">Child</span></tt></a> watchers trigger when your process receives a
+<tt class="xref c c-data docutils literal"><span class="pre">SIGCHLD</span></tt> in response to some child status changes (most typically
+when a child of yours dies or exits). It is permissible to install a
+<a class="reference internal" href="#pyev.Child" title="pyev.Child"><tt class="xref py py-class docutils literal"><span class="pre">Child</span></tt></a> watcher <em>after</em> the child has been forked (which implies
+it might have already exited), as long as the event loop isn&#8217;t entered (or
+is continued from a watcher), i.e. forking and then immediately registering
+a watcher for the child is fine, but forking and registering a watcher a few
+event loop iterations later or in the next callback invocation is not.</p>
+<p>You can only register <a class="reference internal" href="#pyev.Child" title="pyev.Child"><tt class="xref py py-class docutils literal"><span class="pre">Child</span></tt></a> watchers in the <em>default loop</em>.</p>
+<p>Due to some design glitches inside libev, child watchers will always be
+handled at maximum priority (their priority is set to <a class="reference internal" href="Watcher.html#pyev.EV_MAXPRI" title="pyev.EV_MAXPRI"><tt class="xref py py-const docutils literal"><span class="pre">EV_MAXPRI</span></tt></a>
+by libev).</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#code_ev_child_code_watch_out_for_pro">ev_child - watch out for process status changes</a></p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#Process_Interaction">Process Interaction</a></li>
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#Overriding_the_Built_In_Processing">Overriding the Built-In Processing</a></li>
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#Stopping_the_Child_Watcher">Stopping the Child Watcher</a></li>
+</ul>
+</div></blockquote>
+</div>
+<dl class="method">
+<dt id="pyev.Child.set">
+<tt class="descname">set</tt><big>(</big><em>pid</em>, <em>trace</em><big>)</big><a class="headerlink" href="#pyev.Child.set" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>pid</strong> (<em>int</em>) &#8211; wait for status changes of process <em>pid</em> (or any process
+if <em>pid</em> is specified as <tt class="docutils literal"><span class="pre">0</span></tt>).</li>
+<li><strong>trace</strong> (<em>bool</em>) &#8211; if <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> only activate the watcher when
+the process terminates, if <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> additionally activate
+the watcher when the process is stopped or continued.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Configures the watcher.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Child.rpid">
+<tt class="descname">rpid</tt><a class="headerlink" href="#pyev.Child.rpid" title="Permalink to this definition">¶</a></dt>
+<dd><p>The process id that detected a status change.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Child.rstatus">
+<tt class="descname">rstatus</tt><a class="headerlink" href="#pyev.Child.rstatus" title="Permalink to this definition">¶</a></dt>
+<dd><p>The process exit status caused by <a class="reference internal" href="#pyev.Child.rpid" title="pyev.Child.rpid"><tt class="xref py py-attr docutils literal"><span class="pre">rpid</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Child.pid">
+<tt class="descname">pid</tt><a class="headerlink" href="#pyev.Child.pid" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>The process id this watcher watches out for, or <tt class="docutils literal"><span class="pre">0</span></tt>, meaning any
+process id.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Signal.html"
+                        title="previous chapter"><tt class="docutils literal"><span class="pre">Signal</span></tt> &#8212; Signal watcher</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Idle.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">Idle</span></tt> &#8212; Idle watcher</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Child.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Idle.html" title="Idle — Idle watcher"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Signal.html" title="Signal — Signal watcher"
+             >previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" >Watchers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

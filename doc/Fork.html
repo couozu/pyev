@@ -1,0 +1,160 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Fork — Fork watcher &mdash; pyev 0.9.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyev 0.9.0 documentation" href="index.html" />
+    <link rel="up" title="Watchers" href="Watcher.html" />
+    <link rel="next" title="Async — Async watcher" href="Async.html" />
+    <link rel="prev" title="Embed — Embed watcher" href="Embed.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Async.html" title="Async — Async watcher"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Embed.html" title="Embed — Embed watcher"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" accesskey="U">Watchers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="fork-fork-watcher">
+<span id="fork"></span><h1><a class="reference internal" href="#pyev.Fork" title="pyev.Fork"><tt class="xref py py-class docutils literal"><span class="pre">Fork</span></tt></a> &#8212; Fork watcher<a class="headerlink" href="#fork-fork-watcher" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyev.Fork">
+<em class="property">class </em><tt class="descclassname">pyev.</tt><tt class="descname">Fork</tt><big>(</big><em>loop</em>, <em>callback</em><span class="optional">[</span>, <em>data=None</em>, <em>priority=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Fork" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>loop</strong> (<a class="reference internal" href="Loop.html#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a>) &#8211; loop object responsible for this watcher (accessible through
+<a class="reference internal" href="Watcher.html#pyev.Watcher.loop" title="pyev.Watcher.loop"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.loop</span></tt></a>).</li>
+<li><strong>callback</strong> (<em>callable</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.callback" title="pyev.Watcher.callback"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.callback</span></tt></a>.</li>
+<li><strong>data</strong> (<em>object</em>) &#8211; any Python object you might want to attach to the
+watcher (stored in <a class="reference internal" href="Watcher.html#pyev.Watcher.data" title="pyev.Watcher.data"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.data</span></tt></a>).</li>
+<li><strong>priority</strong> (<em>int</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.priority" title="pyev.Watcher.priority"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.priority</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#pyev.Fork" title="pyev.Fork"><tt class="xref py py-class docutils literal"><span class="pre">Fork</span></tt></a> watchers are called when a <tt class="xref c c-func docutils literal"><span class="pre">fork()</span></tt> was detected
+(usually because whoever is a good citizen cared to tell libev about it by
+calling <a class="reference internal" href="Loop.html#pyev.Loop.fork" title="pyev.Loop.fork"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.fork()</span></tt></a>). The invocation is done before the event loop
+blocks next and before <a class="reference internal" href="Prepare_Check.html#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> watchers are being called, and only
+in the child after the fork. If whoever good citizen calling
+<a class="reference internal" href="Loop.html#pyev.Loop.fork" title="pyev.Loop.fork"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.fork()</span></tt></a> cheats and calls it in the wrong process, the fork
+handlers will be invoked, too, of course.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#code_ev_fork_code_the_audacity_to_re">ev_fork - the audacity to resume the event loop after a fork</a></p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problem_of_life_after_fo">The special problem of life after fork - how is it possible?</a></li>
+</ul>
+</div></blockquote>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Embed.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">Embed</span></tt> &#8212; Embed watcher</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Async.html"
+                        title="next chapter"><tt class="docutils literal docutils literal"><span class="pre">Async</span></tt> &#8212; Async watcher</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Fork.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Async.html" title="Async — Async watcher"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Embed.html" title="Embed — Embed watcher"
+             >previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" >Watchers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

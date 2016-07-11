@@ -1,0 +1,804 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Loop — Event loop &mdash; pyev 0.9.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyev 0.9.0 documentation" href="index.html" />
+    <link rel="up" title="pyev — Python libev interface." href="pyev.html" />
+    <link rel="next" title="Watchers" href="Watcher.html" />
+    <link rel="prev" title="pyev — Python libev interface." href="pyev.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Watcher.html" title="Watchers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="pyev.html" title="pyev — Python libev interface."
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="loop-event-loop">
+<span id="loop"></span><h1><a class="reference internal" href="#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a> &#8212; Event loop<a class="headerlink" href="#loop-event-loop" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyev.Loop">
+<em class="property">class </em><tt class="descclassname">pyev.</tt><tt class="descname">Loop</tt><big>(</big><span class="optional">[</span><em>flags=EVFLAG_AUTO</em>, <em>callback=None</em>, <em>data=None</em>, <em>io_interval=0.0</em>, <em>timeout_interval=0.0</em>, <em>debug=False</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Loop" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>flags</strong> (<em>int</em>) &#8211; can be used to specify special behaviour or specific
+backends to use. See <a class="reference internal" href="#loop-flags"><em>Loop flags</em></a> for more details.</li>
+<li><strong>callback</strong> (<em>callable or None</em>) &#8211; If omitted or <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt> the loop will fall back to
+its default behaviour of calling <a class="reference internal" href="#pyev.Loop.invoke" title="pyev.Loop.invoke"><tt class="xref py py-meth docutils literal"><span class="pre">invoke()</span></tt></a> when required.
+If it is a <tt class="xref py py-class docutils literal"><span class="pre">callable</span></tt>, then the loop will execute it instead
+and it becomes the user&#8217;s responsibility to call <a class="reference internal" href="#pyev.Loop.invoke" title="pyev.Loop.invoke"><tt class="xref py py-meth docutils literal"><span class="pre">invoke()</span></tt></a>
+to invoke pending events. See also <a class="reference internal" href="#pyev.Loop.callback" title="pyev.Loop.callback"><tt class="xref py py-attr docutils literal"><span class="pre">callback</span></tt></a>.</li>
+<li><strong>data</strong> (<em>object</em>) &#8211; any Python object you might want to attach to the loop
+(will be stored in <a class="reference internal" href="#pyev.Loop.data" title="pyev.Loop.data"><tt class="xref py py-attr docutils literal"><span class="pre">data</span></tt></a>).</li>
+<li><strong>io_interval</strong> (<em>float</em>) &#8211; See <a class="reference internal" href="#pyev.Loop.io_interval" title="pyev.Loop.io_interval"><tt class="xref py py-attr docutils literal"><span class="pre">io_interval</span></tt></a>.</li>
+<li><strong>timeout_interval</strong> (<em>float</em>) &#8211; See <a class="reference internal" href="#pyev.Loop.timeout_interval" title="pyev.Loop.timeout_interval"><tt class="xref py py-attr docutils literal"><span class="pre">timeout_interval</span></tt></a>.</li>
+<li><strong>debug</strong> (<em>bool</em>) &#8211; See <a class="reference internal" href="#pyev.Loop.debug" title="pyev.Loop.debug"><tt class="xref py py-attr docutils literal"><span class="pre">debug</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Instanciates a new event loop that is always distinct from
+the <em>default loop</em>. Unlike the <em>default loop</em>, it cannot handle
+<a class="reference internal" href="Child.html#pyev.Child" title="pyev.Child"><tt class="xref py py-class docutils literal"><span class="pre">Child</span></tt></a> watchers, and attempts to do so will raise an
+<a class="reference internal" href="pyev.html#pyev.Error" title="pyev.Error"><tt class="xref py py-exc docutils literal"><span class="pre">Error</span></tt></a>.</p>
+<p>One common way to use libev with threads is indeed to create one
+<a class="reference internal" href="#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a> per thread, and use the <em>default loop</em> (from
+<a class="reference internal" href="pyev.html#pyev.default_loop" title="pyev.default_loop"><tt class="xref py py-func docutils literal"><span class="pre">default_loop()</span></tt></a>) in the &#8220;main&#8221; or &#8220;initial&#8221; thread</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#FUNCTIONS_CONTROLLING_EVENT_LOOPS">FUNCTIONS CONTROLLING EVENT LOOPS</a></p>
+</div>
+<dl class="method">
+<dt id="pyev.Loop.start">
+<tt class="descname">start</tt><big>(</big><span class="optional">[</span><em>flags</em><span class="optional">]</span><big>)</big> &rarr; bool<a class="headerlink" href="#pyev.Loop.start" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>flags</strong> (<em>int</em>) &#8211; defaults to <tt class="docutils literal"><span class="pre">0</span></tt>. See <a class="reference internal" href="#loop-start-flags"><em>Loop.start() flags</em></a>.</td>
+</tr>
+</tbody>
+</table>
+<p>This method usually is called after you have initialised all your
+watchers and you want to start handling events.</p>
+<p>Returns <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> if there are no more active watchers (which
+usually means &#8220;all jobs done&#8221; or &#8220;deadlock&#8221;), and <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> in
+all other cases (which usually means you should call <a class="reference internal" href="#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">start()</span></tt></a>
+again)</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.stop">
+<tt class="descname">stop</tt><big>(</big><span class="optional">[</span><em>how</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Loop.stop" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>how</strong> (<em>int</em>) &#8211; defaults to <a class="reference internal" href="#pyev.EVBREAK_ONE" title="pyev.EVBREAK_ONE"><tt class="xref py py-const docutils literal"><span class="pre">EVBREAK_ONE</span></tt></a>.
+See <a class="reference internal" href="#loop-stop-how"><em>Loop.stop() how</em></a>.</td>
+</tr>
+</tbody>
+</table>
+<p>Can be used to make a call to <a class="reference internal" href="#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">start()</span></tt></a> return early (but only
+after it has processed all outstanding events).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.invoke">
+<tt class="descname">invoke</tt><big>(</big><big>)</big><a class="headerlink" href="#pyev.Loop.invoke" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method will simply invoke all pending watchers while resetting
+their pending state. Normally, the loop does this automatically when
+required, but when setting the <a class="reference internal" href="#pyev.Loop.callback" title="pyev.Loop.callback"><tt class="xref py py-attr docutils literal"><span class="pre">callback</span></tt></a> attribute this
+call comes in handy.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.reset">
+<tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#pyev.Loop.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method sets a flag that causes subsequent loop iterations to
+reinitialise the kernel state for backends that have one. You can call
+it anytime, but it makes most sense after forking, in the child process.
+You <strong>must</strong> call it (or use <a class="reference internal" href="#pyev.EVFLAG_FORKCHECK" title="pyev.EVFLAG_FORKCHECK"><tt class="xref py py-const docutils literal"><span class="pre">EVFLAG_FORKCHECK</span></tt></a>) in the child
+before calling <a class="reference internal" href="#pyev.Loop.resume" title="pyev.Loop.resume"><tt class="xref py py-meth docutils literal"><span class="pre">resume()</span></tt></a> or <a class="reference internal" href="#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">start()</span></tt></a>. Again, you have to
+call it on any loop that you want to re-use after a fork, even if you do
+not plan to use the loop in the parent.</p>
+<p>On the other hand, you only need to call this method in the child
+process if and only if you want to use the event loop in the child. If
+you just <tt class="xref c c-func docutils literal"><span class="pre">fork()</span></tt>+<tt class="xref c c-func docutils literal"><span class="pre">exec()</span></tt> or create a new loop in the
+child, you don&#8217;t have to call it at all.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.now">
+<tt class="descname">now</tt><big>(</big><big>)</big> &rarr; float<a class="headerlink" href="#pyev.Loop.now" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current &#8220;event loop time&#8221;, which is the time the event loop
+received events and started processing them. This timestamp does not
+change as long as callbacks are being processed, and this is also the
+base time used for relative timers. You can treat it as the timestamp of
+the event occurring (or more correctly, libev finding out about it).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.update">
+<tt class="descname">update</tt><big>(</big><big>)</big><a class="headerlink" href="#pyev.Loop.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Establishes the current time by querying the kernel, updating the time
+returned by <a class="reference internal" href="#pyev.Loop.now" title="pyev.Loop.now"><tt class="xref py py-meth docutils literal"><span class="pre">now()</span></tt></a> in the progress. This is a costly
+operation and is usually done automatically within the loop.
+This method is rarely useful, but when some event callback runs for a
+very long time without entering the event loop, updating libev&#8217;s idea
+of the current time is a good idea.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problem_of_time_updates">The special problem of time updates</a></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.suspend">
+<tt class="descname">suspend</tt><big>(</big><big>)</big><a class="headerlink" href="#pyev.Loop.suspend" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.resume">
+<tt class="descname">resume</tt><big>(</big><big>)</big><a class="headerlink" href="#pyev.Loop.resume" title="Permalink to this definition">¶</a></dt>
+<dd><p>These two methods should be used when the loop is not used for a while
+and timeouts should not be processed.
+A typical use case would be an interactive program such as a game: when
+the user presses <tt class="kbd docutils literal"><span class="pre">Control-z</span></tt> to suspend the game and resumes it an
+hour later it would be best to handle timeouts as if no time had
+actually passed while the program was suspended. This can be achieved by
+calling <a class="reference internal" href="#pyev.Loop.suspend" title="pyev.Loop.suspend"><tt class="xref py py-meth docutils literal"><span class="pre">suspend()</span></tt></a> in your <tt class="xref c c-data docutils literal"><span class="pre">SIGTSTP</span></tt> handler, sending
+yourself a <tt class="xref c c-data docutils literal"><span class="pre">SIGSTOP</span></tt> and calling <a class="reference internal" href="#pyev.Loop.resume" title="pyev.Loop.resume"><tt class="xref py py-meth docutils literal"><span class="pre">resume()</span></tt></a> directly
+afterwards to resume timer processing.</p>
+<p>Effectively, all <a class="reference internal" href="Timer.html#pyev.Timer" title="pyev.Timer"><tt class="xref py py-class docutils literal"><span class="pre">Timer</span></tt></a> watchers will be delayed by the time
+spent between <a class="reference internal" href="#pyev.Loop.suspend" title="pyev.Loop.suspend"><tt class="xref py py-meth docutils literal"><span class="pre">suspend()</span></tt></a> and <a class="reference internal" href="#pyev.Loop.resume" title="pyev.Loop.resume"><tt class="xref py py-meth docutils literal"><span class="pre">resume()</span></tt></a>, and all
+<a class="reference internal" href="Periodic.html#pyev.Periodic" title="pyev.Periodic"><tt class="xref py py-class docutils literal"><span class="pre">Periodic</span></tt></a> watchers will be rescheduled (that is, they will
+lose any events that would have occurred while suspended).
+After calling <a class="reference internal" href="#pyev.Loop.suspend" title="pyev.Loop.suspend"><tt class="xref py py-meth docutils literal"><span class="pre">suspend()</span></tt></a> you must not call any method on the
+loop other than <a class="reference internal" href="#pyev.Loop.resume" title="pyev.Loop.resume"><tt class="xref py py-meth docutils literal"><span class="pre">resume()</span></tt></a>, and you must not call
+<a class="reference internal" href="#pyev.Loop.resume" title="pyev.Loop.resume"><tt class="xref py py-meth docutils literal"><span class="pre">resume()</span></tt></a> without a previous call to <a class="reference internal" href="#pyev.Loop.suspend" title="pyev.Loop.suspend"><tt class="xref py py-meth docutils literal"><span class="pre">suspend()</span></tt></a>.
+Calling <a class="reference internal" href="#pyev.Loop.suspend" title="pyev.Loop.suspend"><tt class="xref py py-meth docutils literal"><span class="pre">suspend()</span></tt></a>/<a class="reference internal" href="#pyev.Loop.resume" title="pyev.Loop.resume"><tt class="xref py py-meth docutils literal"><span class="pre">resume()</span></tt></a> has the side effect of
+updating the event loop time (see <a class="reference internal" href="#pyev.Loop.update" title="pyev.Loop.update"><tt class="xref py py-meth docutils literal"><span class="pre">update()</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.unref">
+<tt class="descname">unref</tt><big>(</big><big>)</big><a class="headerlink" href="#pyev.Loop.unref" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.ref">
+<tt class="descname">ref</tt><big>(</big><big>)</big><a class="headerlink" href="#pyev.Loop.ref" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#pyev.Loop.unref" title="pyev.Loop.unref"><tt class="xref py py-meth docutils literal"><span class="pre">unref()</span></tt></a>/<a class="reference internal" href="#pyev.Loop.ref" title="pyev.Loop.ref"><tt class="xref py py-meth docutils literal"><span class="pre">ref()</span></tt></a> can be used to add or remove a
+reference count on the event loop: every watcher keeps one reference,
+and as long as the reference count is nonzero, the loop will not return
+on its own.</p>
+<p>This is useful when you have a watcher that you never intend to
+unregister, but that nevertheless should not keep the loop from
+returning. In such a case, call <a class="reference internal" href="#pyev.Loop.unref" title="pyev.Loop.unref"><tt class="xref py py-meth docutils literal"><span class="pre">unref()</span></tt></a> after starting, and
+<a class="reference internal" href="#pyev.Loop.ref" title="pyev.Loop.ref"><tt class="xref py py-meth docutils literal"><span class="pre">ref()</span></tt></a> before stopping it.
+As an example, libev itself uses this for its internal signal pipe: it
+is not visible to the user and should not keep the loop from exiting if
+no event watchers registered by it are active. It is also good to do
+this for generic recurring timers or from within third-party libraries.
+Just remember to <a class="reference internal" href="#pyev.Loop.unref" title="pyev.Loop.unref"><tt class="xref py py-meth docutils literal"><span class="pre">unref()</span></tt></a> after <a class="reference internal" href="Watcher.html#pyev.Watcher.start" title="pyev.Watcher.start"><tt class="xref py py-meth docutils literal"><span class="pre">Watcher.start()</span></tt></a> and
+<a class="reference internal" href="#pyev.Loop.ref" title="pyev.Loop.ref"><tt class="xref py py-meth docutils literal"><span class="pre">ref()</span></tt></a> before <a class="reference internal" href="Watcher.html#pyev.Watcher.stop" title="pyev.Watcher.stop"><tt class="xref py py-meth docutils literal"><span class="pre">Watcher.stop()</span></tt></a> (but only if the watcher
+wasn&#8217;t active before, or was active before, respectively. Note also that
+libev might stop watchers itself (e.g. non-repeating timers) in which
+case you have to <a class="reference internal" href="#pyev.Loop.ref" title="pyev.Loop.ref"><tt class="xref py py-meth docutils literal"><span class="pre">ref()</span></tt></a> in the callback).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">These two methods have nothing to do with Python reference counting.</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.verify">
+<tt class="descname">verify</tt><big>(</big><big>)</big><a class="headerlink" href="#pyev.Loop.verify" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method only does something when <tt class="xref c c-data docutils literal"><span class="pre">EV_VERIFY</span></tt> support has
+been compiled in libev (which is the default for non-minimal builds).
+It tries to go through all internal structures and checks them for
+validity. If anything is found to be inconsistent, it will print an
+error message to standard error and call <tt class="xref c c-func docutils literal"><span class="pre">abort()</span></tt>.
+This can be used to catch bugs inside libev itself: under normal
+circumstances, this method should never abort.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Loop.data">
+<tt class="descname">data</tt><a class="headerlink" href="#pyev.Loop.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>loop data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Loop.callback">
+<tt class="descname">callback</tt><a class="headerlink" href="#pyev.Loop.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current invoke pending callback, its signature must be:</p>
+<dl class="method">
+<dt>
+<tt class="descname">callback</tt><big>(</big><em>loop</em><big>)</big></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>loop</strong> (<a class="reference internal" href="#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a> object) &#8211; this loop.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>This overrides the invoke pending functionality of the loop: instead of
+invoking all pending watchers when there are any, the loop will call
+this callback instead (use <a class="reference internal" href="#pyev.Loop.invoke" title="pyev.Loop.invoke"><tt class="xref py py-meth docutils literal"><span class="pre">invoke()</span></tt></a> if you want to invoke all
+pending watchers). This is useful, for example, when you want to invoke
+the actual watchers inside another context (another thread, etc.).</p>
+<p>If you want to reset the callback, set it to <tt class="xref py py-const docutils literal"><span class="pre">None</span></tt>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If the callback raises an error, pyev will <strong>stop the loop</strong>.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Loop.io_interval">
+<tt class="descname">io_interval</tt><a class="headerlink" href="#pyev.Loop.io_interval" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Loop.timeout_interval">
+<tt class="descname">timeout_interval</tt><a class="headerlink" href="#pyev.Loop.timeout_interval" title="Permalink to this definition">¶</a></dt>
+<dd><p>These two attributes influence the time that libev will spend waiting
+for events. Both time intervals are by default <tt class="docutils literal"><span class="pre">0.0</span></tt>, meaning that
+libev will try to invoke <a class="reference internal" href="Timer.html#pyev.Timer" title="pyev.Timer"><tt class="xref py py-class docutils literal"><span class="pre">Timer</span></tt></a>/<a class="reference internal" href="Periodic.html#pyev.Periodic" title="pyev.Periodic"><tt class="xref py py-class docutils literal"><span class="pre">Periodic</span></tt></a>
+callbacks and <a class="reference internal" href="Io.html#pyev.Io" title="pyev.Io"><tt class="xref py py-class docutils literal"><span class="pre">Io</span></tt></a> callbacks with minimum latency.
+Setting these to a higher value (the interval must be &gt;= <tt class="docutils literal"><span class="pre">0</span></tt>) allows
+libev to delay invocation of <a class="reference internal" href="Io.html#pyev.Io" title="pyev.Io"><tt class="xref py py-class docutils literal"><span class="pre">Io</span></tt></a> and <a class="reference internal" href="Timer.html#pyev.Timer" title="pyev.Timer"><tt class="xref py py-class docutils literal"><span class="pre">Timer</span></tt></a>/<a class="reference internal" href="Periodic.html#pyev.Periodic" title="pyev.Periodic"><tt class="xref py py-class docutils literal"><span class="pre">Periodic</span></tt></a> callbacks to increase efficiency of loop iterations
+(or to increase power-saving opportunities).
+The idea is that sometimes your program runs just fast enough to handle
+one (or very few) event(s) per loop iteration. While this makes the
+program responsive, it also wastes a lot of CPU time to poll for new
+events, especially with backends like <tt class="docutils literal"><span class="pre">select</span></tt> which have a high
+overhead for the actual polling but can deliver many events at once.</p>
+<p>By setting a higher <em>io_interval</em> you allow libev to spend more time
+collecting <a class="reference internal" href="Io.html#pyev.Io" title="pyev.Io"><tt class="xref py py-class docutils literal"><span class="pre">Io</span></tt></a> events, so you can handle more events per
+iteration, at the cost of increasing latency. Timeouts (both
+<a class="reference internal" href="Periodic.html#pyev.Periodic" title="pyev.Periodic"><tt class="xref py py-class docutils literal"><span class="pre">Periodic</span></tt></a> and <a class="reference internal" href="Timer.html#pyev.Timer" title="pyev.Timer"><tt class="xref py py-class docutils literal"><span class="pre">Timer</span></tt></a>) will not be affected.
+Setting this to a non-zero value will introduce an additional
+<a class="reference internal" href="pyev.html#pyev.sleep" title="pyev.sleep"><tt class="xref py py-func docutils literal"><span class="pre">sleep()</span></tt></a> call into most loop iterations. The sleep time ensures
+that libev will not poll for <a class="reference internal" href="Io.html#pyev.Io" title="pyev.Io"><tt class="xref py py-class docutils literal"><span class="pre">Io</span></tt></a> events events more often
+than once per this interval, on average (as long as the host time
+resolution is good enough).
+Many (busy) programs can usually benefit by setting the <em>io_interval</em> to
+a value near <tt class="docutils literal"><span class="pre">0.1</span></tt> or so, which is often enough for interactive
+servers (of course not for games), likewise for timeouts. It usually
+doesn&#8217;t make much sense to set it to a lower value than <tt class="docutils literal"><span class="pre">0.01</span></tt>, as
+this approaches the timing granularity of most systems. Note that if you
+do transactions with the outside world and you can&#8217;t increase the
+parallelism, then this setting will limit your transaction rate (if you
+need to poll once per transaction and the <em>io_interval</em> is <tt class="docutils literal"><span class="pre">0.01</span></tt>,
+then you can&#8217;t do more than <tt class="docutils literal"><span class="pre">100</span></tt> transactions per second).</p>
+<p>Likewise, by setting a higher <em>timeout_interval</em> you allow libev to
+spend more time collecting timeouts, at the expense of increased
+latency/jitter/inexactness (the watcher callback will be called later).
+<a class="reference internal" href="Io.html#pyev.Io" title="pyev.Io"><tt class="xref py py-class docutils literal"><span class="pre">Io</span></tt></a> watchers will not be affected.
+Setting this to a non-zero value will not introduce any overhead in libev.
+Setting the <em>timeout_interval</em> can improve the opportunity for saving
+power, as the program will &#8220;bundle&#8221; timer callback invocations that are
+&#8220;near&#8221; in time together, by delaying some, thus reducing the number of
+times the process sleeps and wakes up again. Another useful technique to
+reduce iterations/wake-ups is to use <a class="reference internal" href="Periodic.html#pyev.Periodic" title="pyev.Periodic"><tt class="xref py py-class docutils literal"><span class="pre">Periodic</span></tt></a> watchers and
+make sure they fire on, say, one-second boundaries only.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Loop.debug">
+<tt class="descname">debug</tt><a class="headerlink" href="#pyev.Loop.debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>This affects the behaviour of the loop while executing all watcher
+callbacks (<a class="reference internal" href="Watcher.html#pyev.Watcher.callback" title="pyev.Watcher.callback"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.callback</span></tt></a> and <a class="reference internal" href="Scheduler.html#pyev.Scheduler.scheduler" title="pyev.Scheduler.scheduler"><tt class="xref py py-attr docutils literal"><span class="pre">Scheduler.scheduler</span></tt></a>).</p>
+<p>If <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> (the default), when a callback returns with an
+unhandled exception, the loop will print a warning and suppress the
+exception, in this configuration, the loop will <strong>only stop on fatal
+errors</strong> (memory allocation failure, <a class="reference internal" href="Watcher.html#pyev.EV_ERROR" title="pyev.EV_ERROR"><tt class="xref py py-const docutils literal"><span class="pre">EV_ERROR</span></tt></a> received, ...).</p>
+<p>If <tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>, the loop will <strong>stop on all errors</strong> (you do not
+want that if you write a server).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Loop.default">
+<tt class="descname">default</tt><a class="headerlink" href="#pyev.Loop.default" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p><tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if the loop is the <em>default loop</em>, <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>
+otherwise.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Loop.backend">
+<tt class="descname">backend</tt><a class="headerlink" href="#pyev.Loop.backend" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>One of the <a class="reference internal" href="#loop-backends"><em>backends</em></a> flags indicating the event backend in
+use.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Loop.pending">
+<tt class="descname">pending</tt><a class="headerlink" href="#pyev.Loop.pending" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>The number of pending watchers - <tt class="docutils literal"><span class="pre">0</span></tt> indicates that no watchers are
+pending.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Loop.iteration">
+<tt class="descname">iteration</tt><a class="headerlink" href="#pyev.Loop.iteration" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>The current iteration count for the loop, which is identical to the
+number of times libev did poll for new events. It starts at <tt class="docutils literal"><span class="pre">0</span></tt> and
+happily wraps around with enough iterations. This value can sometimes be
+useful as a generation counter of sorts (it &#8220;ticks&#8221; the number of loop
+iterations), as it roughly corresponds with <a class="reference internal" href="Prepare_Check.html#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a> and
+<a class="reference internal" href="Prepare_Check.html#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> calls - and is incremented between the prepare and
+check phases.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Loop.depth">
+<tt class="descname">depth</tt><a class="headerlink" href="#pyev.Loop.depth" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>The number of times <a class="reference internal" href="#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">start()</span></tt></a> was entered minus the number of
+times <a class="reference internal" href="#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">start()</span></tt></a> was exited normally, in other words, the
+recursion depth. Outside <a class="reference internal" href="#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">start()</span></tt></a>, this number is <tt class="docutils literal"><span class="pre">0</span></tt>. In a
+callback, this number is <tt class="docutils literal"><span class="pre">1</span></tt>, unless <a class="reference internal" href="#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">start()</span></tt></a> was invoked
+recursively (or from another thread), in which case it is higher.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="loop-flags">
+<span id="id1"></span><h2><a class="reference internal" href="#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a> <em>flags</em><a class="headerlink" href="#loop-flags" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="behaviour">
+<h3>behaviour<a class="headerlink" href="#behaviour" title="Permalink to this headline">¶</a></h3>
+<dl class="data">
+<dt id="pyev.EVFLAG_AUTO">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVFLAG_AUTO</tt><a class="headerlink" href="#pyev.EVFLAG_AUTO" title="Permalink to this definition">¶</a></dt>
+<dd><p>The default <em>flags</em> value.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EVFLAG_NOENV">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVFLAG_NOENV</tt><a class="headerlink" href="#pyev.EVFLAG_NOENV" title="Permalink to this definition">¶</a></dt>
+<dd><p>If this flag bit is or&#8217;ed into the <em>flags</em> value (or the program runs
+<tt class="xref c c-func docutils literal"><span class="pre">setuid()</span></tt> or <tt class="xref c c-func docutils literal"><span class="pre">setgid()</span></tt>) then libev will not look at the
+environment variable <span class="target" id="index-0"></span><tt class="xref std std-envvar docutils literal"><span class="pre">LIBEV_FLAGS</span></tt>. Otherwise (the default),
+<span class="target" id="index-1"></span><tt class="xref std std-envvar docutils literal"><span class="pre">LIBEV_FLAGS</span></tt> will override the <em>flags</em> completely if it is found in
+the environment. This is useful to try out specific backends to test their
+performance, or to work around bugs.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EVFLAG_FORKCHECK">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVFLAG_FORKCHECK</tt><a class="headerlink" href="#pyev.EVFLAG_FORKCHECK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instead of calling <a class="reference internal" href="#pyev.Loop.reset" title="pyev.Loop.reset"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.reset()</span></tt></a> manually after a fork, you can also
+make libev check for a fork in each iteration by enabling this flag.
+This works by calling <tt class="xref c c-func docutils literal"><span class="pre">getpid()</span></tt> on every iteration of the loop, and
+thus this might slow down your event loop if you do a lot of loop iterations
+and little real work, but is usually not noticeable.
+The big advantage of this flag is that you can forget about fork (and forget
+about forgetting to tell libev about forking) when you use it.
+This flag setting cannot be overridden or specified in the
+<span class="target" id="index-2"></span><tt class="xref std std-envvar docutils literal"><span class="pre">LIBEV_FLAGS</span></tt> environment variable.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EVFLAG_SIGNALFD">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVFLAG_SIGNALFD</tt><a class="headerlink" href="#pyev.EVFLAG_SIGNALFD" title="Permalink to this definition">¶</a></dt>
+<dd><p>When this flag is specified, then libev will attempt to use the <tt class="docutils literal"><span class="pre">signalfd</span></tt>
+API for the <a class="reference internal" href="Signal.html#pyev.Signal" title="pyev.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> (and <a class="reference internal" href="Child.html#pyev.Child" title="pyev.Child"><tt class="xref py py-class docutils literal"><span class="pre">Child</span></tt></a>) watchers. This API
+delivers signals synchronously, which makes it both faster and might make it
+possible to get the queued signal data. It can also simplify signal handling
+with threads, as long as you properly block signals in your threads that are
+not interested in handling them.
+<tt class="docutils literal"><span class="pre">signalfd</span></tt> will not be used by default as this changes your signal mask.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EVFLAG_NOSIGMASK">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVFLAG_NOSIGMASK</tt><a class="headerlink" href="#pyev.EVFLAG_NOSIGMASK" title="Permalink to this definition">¶</a></dt>
+<dd><p>When this flag is specified, then libev will avoid to modify the signal mask.
+Specifically, this means you have to make sure signals are unblocked when
+you want to receive them.
+This behaviour is useful when you want to do your own signal handling, or
+want to handle signals only in specific threads and want to avoid libev
+unblocking the signals.
+It&#8217;s also required by POSIX in a threaded program, as libev calls
+<tt class="xref c c-func docutils literal"><span class="pre">sigprocmask()</span></tt>, whose behaviour is officially unspecified.
+This flag&#8217;s behaviour will become the default in future versions of libev.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="backends">
+<span id="loop-backends"></span><h3>backends<a class="headerlink" href="#backends" title="Permalink to this headline">¶</a></h3>
+<dl class="data">
+<dt id="pyev.EVBACKEND_SELECT">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVBACKEND_SELECT</tt><a class="headerlink" href="#pyev.EVBACKEND_SELECT" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Availability:</em> POSIX</p>
+<p>The standard <tt class="docutils literal"><span class="pre">select</span></tt> backend. Not completely standard, as libev tries to
+roll its own <tt class="xref c c-type docutils literal"><span class="pre">fd_set</span></tt> with no limits on the number of fds, but if
+that fails, expect a fairly low limit on the number of fds when using this
+backend. It doesn&#8217;t scale too well (O(<em>highest_fd</em>)), but is usually the
+fastest backend for a low number of (low-numbered) fds.</p>
+<p>To get good performance out of this backend you need a high amount of
+parallelism (most of the file descriptors should be busy). If you are
+writing a server, you should <tt class="xref c c-func docutils literal"><span class="pre">accept()</span></tt> in a loop to accept as many
+connections as possible during one iteration. You might also want to have a
+look at <a class="reference internal" href="#pyev.Loop.io_interval" title="pyev.Loop.io_interval"><tt class="xref py py-attr docutils literal"><span class="pre">Loop.io_interval</span></tt></a> to increase the amount of readiness
+notifications you get per iteration.</p>
+<p>This backend maps <a class="reference internal" href="Watcher.html#pyev.EV_READ" title="pyev.EV_READ"><tt class="xref py py-const docutils literal"><span class="pre">EV_READ</span></tt></a> to the <tt class="xref c c-data docutils literal"><span class="pre">readfds</span></tt> set and
+<a class="reference internal" href="Watcher.html#pyev.EV_WRITE" title="pyev.EV_WRITE"><tt class="xref py py-const docutils literal"><span class="pre">EV_WRITE</span></tt></a> to the <tt class="xref c c-data docutils literal"><span class="pre">writefds</span></tt> set.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EVBACKEND_POLL">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVBACKEND_POLL</tt><a class="headerlink" href="#pyev.EVBACKEND_POLL" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Availability:</em> POSIX</p>
+<p>The <tt class="docutils literal"><span class="pre">poll</span></tt> backend. It&#8217;s more complicated than <tt class="docutils literal"><span class="pre">select</span></tt>, but handles
+sparse fds better and has no artificial limit on the number of fds you can
+use (except it will slow down considerably with a lot of inactive fds). It
+scales similarly to <tt class="docutils literal"><span class="pre">select</span></tt>, i.e. O(<em>total_fds</em>). See
+<a class="reference internal" href="#pyev.EVBACKEND_SELECT" title="pyev.EVBACKEND_SELECT"><tt class="xref py py-const docutils literal"><span class="pre">EVBACKEND_SELECT</span></tt></a>, above, for performance tips.</p>
+<p>This backend maps <a class="reference internal" href="Watcher.html#pyev.EV_READ" title="pyev.EV_READ"><tt class="xref py py-const docutils literal"><span class="pre">EV_READ</span></tt></a> to
+<tt class="xref c c-data docutils literal"><span class="pre">POLLIN</span></tt> | <tt class="xref c c-data docutils literal"><span class="pre">POLLERR</span></tt> | <tt class="xref c c-data docutils literal"><span class="pre">POLLHUP</span></tt>, and
+<a class="reference internal" href="Watcher.html#pyev.EV_WRITE" title="pyev.EV_WRITE"><tt class="xref py py-const docutils literal"><span class="pre">EV_WRITE</span></tt></a> to
+<tt class="xref c c-data docutils literal"><span class="pre">POLLOUT</span></tt> | <tt class="xref c c-data docutils literal"><span class="pre">POLLERR</span></tt> | <tt class="xref c c-data docutils literal"><span class="pre">POLLHUP</span></tt>.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EVBACKEND_EPOLL">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVBACKEND_EPOLL</tt><a class="headerlink" href="#pyev.EVBACKEND_EPOLL" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Availability:</em> Linux</p>
+<p>Use the linux-specific <tt class="docutils literal"><span class="pre">epoll</span></tt> interface. For few fds, this backend is a
+little bit slower than <tt class="docutils literal"><span class="pre">poll</span></tt> and <tt class="docutils literal"><span class="pre">select</span></tt>, but it scales phenomenally
+better. While <tt class="docutils literal"><span class="pre">poll</span></tt> and <tt class="docutils literal"><span class="pre">select</span></tt> usually scale like O(<em>total_fds</em>)
+where <em>total_fds</em> is the total number of fds (or the highest fd), <tt class="docutils literal"><span class="pre">epoll</span></tt>
+scales either O(<em>1</em>) or O(<em>active_fds</em>).</p>
+<p>While stopping, setting and starting an I/O watcher in the same iteration
+will result in some caching, there is still a system call per such incident,
+so its best to avoid that. Also, <tt class="xref c c-func docutils literal"><span class="pre">dup()</span></tt>&#8216;ed file descriptors might not
+work very well if you register events for both file descriptors.</p>
+<p>Best performance from this backend is achieved by not unregistering all
+watchers for a file descriptor until it has been closed, if possible, i.e.
+keep at least one watcher active per fd at all times. Stopping and starting
+a watcher (without re-setting it) also usually doesn&#8217;t cause extra overhead.
+A fork can both result in spurious notifications as well as in libev having
+to destroy and recreate the <tt class="docutils literal"><span class="pre">epoll</span></tt> object, which can take considerable
+time and thus should be avoided. All this means that, in practice,
+<tt class="docutils literal"><span class="pre">select</span></tt> can be as fast or faster than <tt class="docutils literal"><span class="pre">epoll</span></tt> for maybe up to a hundred
+file descriptors, depending on the usage.</p>
+<p>While nominally embeddable in other event loops, this feature is broken in
+all kernel versions tested so far.</p>
+<p>This backend maps <a class="reference internal" href="Watcher.html#pyev.EV_READ" title="pyev.EV_READ"><tt class="xref py py-const docutils literal"><span class="pre">EV_READ</span></tt></a> and <a class="reference internal" href="Watcher.html#pyev.EV_WRITE" title="pyev.EV_WRITE"><tt class="xref py py-const docutils literal"><span class="pre">EV_WRITE</span></tt></a> the same way
+<a class="reference internal" href="#pyev.EVBACKEND_POLL" title="pyev.EVBACKEND_POLL"><tt class="xref py py-const docutils literal"><span class="pre">EVBACKEND_POLL</span></tt></a> does.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EVBACKEND_KQUEUE">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVBACKEND_KQUEUE</tt><a class="headerlink" href="#pyev.EVBACKEND_KQUEUE" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Availability:</em> most BSD clones</p>
+<p>Due to a number of bugs and inconsistencies between BSDs implementations,
+<tt class="docutils literal"><span class="pre">kqueue</span></tt> is not being &#8220;auto-detected&#8221; unless you explicitly specify it in
+the <em>flags</em> or libev was compiled on a known-to-be-good (-enough) system
+like NetBSD. It scales the same way the <tt class="docutils literal"><span class="pre">epoll</span></tt> backend does.</p>
+<p>While stopping, setting and starting an I/O watcher does never cause an
+extra system call as with <a class="reference internal" href="#pyev.EVBACKEND_EPOLL" title="pyev.EVBACKEND_EPOLL"><tt class="xref py py-const docutils literal"><span class="pre">EVBACKEND_EPOLL</span></tt></a>, it still adds up to
+two event changes per incident. Support for <tt class="xref c c-func docutils literal"><span class="pre">fork()</span></tt> is bad (but sane)
+and it drops fds silently in similarly hard-to-detect cases.</p>
+<p>This backend usually performs well under most conditions.</p>
+<p>You still can embed <tt class="docutils literal"><span class="pre">kqueue</span></tt> into a normal <tt class="docutils literal"><span class="pre">poll</span></tt> or <tt class="docutils literal"><span class="pre">select</span></tt> backend
+and use it only for sockets (after having made sure that sockets work with
+<tt class="docutils literal"><span class="pre">kqueue</span></tt> on the target platform). See <a class="reference internal" href="Embed.html#pyev.Embed" title="pyev.Embed"><tt class="xref py py-class docutils literal"><span class="pre">Embed</span></tt></a> watchers for more
+info.</p>
+<p>This backend maps <a class="reference internal" href="Watcher.html#pyev.EV_READ" title="pyev.EV_READ"><tt class="xref py py-const docutils literal"><span class="pre">EV_READ</span></tt></a> into an <tt class="xref c c-data docutils literal"><span class="pre">EVFILT_READ</span></tt> kevent
+with <tt class="xref c c-data docutils literal"><span class="pre">NOTE_EOF</span></tt>, and <a class="reference internal" href="Watcher.html#pyev.EV_WRITE" title="pyev.EV_WRITE"><tt class="xref py py-const docutils literal"><span class="pre">EV_WRITE</span></tt></a> into an
+<tt class="xref c c-data docutils literal"><span class="pre">EVFILT_WRITE</span></tt> kevent with <tt class="xref c c-data docutils literal"><span class="pre">NOTE_EOF</span></tt>.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EVBACKEND_DEVPOLL">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVBACKEND_DEVPOLL</tt><a class="headerlink" href="#pyev.EVBACKEND_DEVPOLL" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Availability:</em> Solaris 8</p>
+<p>This is not implemented yet (and might never be). According to reports,
+<tt class="docutils literal"><span class="pre">/dev/poll</span></tt> only supports sockets and is not embeddable, which would limit
+the usefulness of this backend immensely.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EVBACKEND_PORT">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVBACKEND_PORT</tt><a class="headerlink" href="#pyev.EVBACKEND_PORT" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Availability:</em> Solaris 10</p>
+<p>This uses the Solaris 10 <tt class="docutils literal"><span class="pre">event</span> <span class="pre">port</span></tt> mechanism. It&#8217;s slow, but it scales
+very well (O(<em>active_fds</em>)).</p>
+<p>While this backend scales well, it requires one system call per active file
+descriptor per loop iteration. For small and medium numbers of file
+descriptors a &#8220;slow&#8221; <a class="reference internal" href="#pyev.EVBACKEND_SELECT" title="pyev.EVBACKEND_SELECT"><tt class="xref py py-const docutils literal"><span class="pre">EVBACKEND_SELECT</span></tt></a> or
+<a class="reference internal" href="#pyev.EVBACKEND_POLL" title="pyev.EVBACKEND_POLL"><tt class="xref py py-const docutils literal"><span class="pre">EVBACKEND_POLL</span></tt></a> backend might perform better.</p>
+<p>On the positive side, this backend actually performed fully to specification
+in all tests and is fully embeddable.</p>
+<p>This backend maps <a class="reference internal" href="Watcher.html#pyev.EV_READ" title="pyev.EV_READ"><tt class="xref py py-const docutils literal"><span class="pre">EV_READ</span></tt></a> and <a class="reference internal" href="Watcher.html#pyev.EV_WRITE" title="pyev.EV_WRITE"><tt class="xref py py-const docutils literal"><span class="pre">EV_WRITE</span></tt></a> the same way
+<a class="reference internal" href="#pyev.EVBACKEND_POLL" title="pyev.EVBACKEND_POLL"><tt class="xref py py-const docutils literal"><span class="pre">EVBACKEND_POLL</span></tt></a> does.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EVBACKEND_ALL">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVBACKEND_ALL</tt><a class="headerlink" href="#pyev.EVBACKEND_ALL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try all backends (even potentially broken ones that wouldn&#8217;t be tried with
+<a class="reference internal" href="#pyev.EVFLAG_AUTO" title="pyev.EVFLAG_AUTO"><tt class="xref py py-const docutils literal"><span class="pre">EVFLAG_AUTO</span></tt></a>). Since this is a mask, you can do stuff such as:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">pyev</span><span class="o">.</span><span class="n">EVBACKEND_ALL</span> <span class="o">&amp;</span> <span class="o">~</span><span class="n">pyev</span><span class="o">.</span><span class="n">EVBACKEND_KQUEUE</span>
+</pre></div>
+</div>
+<p>It is definitely not recommended to use this flag, use whatever
+<a class="reference internal" href="pyev.html#pyev.recommended_backends" title="pyev.recommended_backends"><tt class="xref py py-func docutils literal"><span class="pre">recommended_backends()</span></tt></a> returns, or simply do not specify a backend
+at all.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EVBACKEND_MASK">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVBACKEND_MASK</tt><a class="headerlink" href="#pyev.EVBACKEND_MASK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not a backend at all, but a mask to select all backend bits from a flags
+value, in case you want to mask out any backends from a flags value
+(e.g. when modifying the <span class="target" id="index-3"></span><tt class="xref std std-envvar docutils literal"><span class="pre">LIBEV_FLAGS</span></tt> environment variable).</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="loop-start-flags">
+<span id="id2"></span><h2><a class="reference internal" href="#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.start()</span></tt></a> <em>flags</em><a class="headerlink" href="#loop-start-flags" title="Permalink to this headline">¶</a></h2>
+<p>If <em>flags</em> is omitted or specified as <tt class="docutils literal"><span class="pre">0</span></tt>, it will keep handling events until
+either no event watchers are active anymore or <a class="reference internal" href="#pyev.Loop.stop" title="pyev.Loop.stop"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.stop()</span></tt></a> was called.</p>
+<dl class="data">
+<dt id="pyev.EVRUN_NOWAIT">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVRUN_NOWAIT</tt><a class="headerlink" href="#pyev.EVRUN_NOWAIT" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <em>flags</em> value of <a class="reference internal" href="#pyev.EVRUN_NOWAIT" title="pyev.EVRUN_NOWAIT"><tt class="xref py py-const docutils literal"><span class="pre">EVRUN_NOWAIT</span></tt></a> will look for new events,
+will handle those events and any already outstanding ones, but will not
+wait and block your process in case there are no events and will return
+after one iteration of the loop.
+This is sometimes useful to poll and handle new events while doing lengthy
+calculations, to keep the program responsive.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EVRUN_ONCE">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVRUN_ONCE</tt><a class="headerlink" href="#pyev.EVRUN_ONCE" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <em>flags</em> value of <a class="reference internal" href="#pyev.EVRUN_ONCE" title="pyev.EVRUN_ONCE"><tt class="xref py py-const docutils literal"><span class="pre">EVRUN_ONCE</span></tt></a> will look for new events
+(waiting if necessary) and will handle those and any already outstanding
+ones. It will block your process until at least one new event arrives
+(which could be an event internal to libev itself, so there is no
+guarantee that a user-registered callback will be called), and will
+return after one iteration of the loop.
+This is useful if you are waiting for some external event in conjunction
+with something not expressible using other libev watchers. However, a pair
+of <a class="reference internal" href="Prepare_Check.html#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a>/<a class="reference internal" href="Prepare_Check.html#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> watchers is usually a better
+approach for this kind of thing.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">An explicit <a class="reference internal" href="#pyev.Loop.stop" title="pyev.Loop.stop"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.stop()</span></tt></a> is usually better than relying on all
+watchers being stopped when deciding if a program has finished (especially
+in interactive programs).</p>
+</div>
+</div>
+<div class="section" id="loop-stop-how">
+<span id="id3"></span><h2><a class="reference internal" href="#pyev.Loop.stop" title="pyev.Loop.stop"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.stop()</span></tt></a> <em>how</em><a class="headerlink" href="#loop-stop-how" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="pyev.EVBREAK_ONE">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVBREAK_ONE</tt><a class="headerlink" href="#pyev.EVBREAK_ONE" title="Permalink to this definition">¶</a></dt>
+<dd><p>If <em>how</em> is omitted or specified as <a class="reference internal" href="#pyev.EVBREAK_ONE" title="pyev.EVBREAK_ONE"><tt class="xref py py-const docutils literal"><span class="pre">EVBREAK_ONE</span></tt></a> it will make the
+innermost <a class="reference internal" href="#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.start()</span></tt></a> call return.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EVBREAK_ALL">
+<tt class="descclassname">pyev.</tt><tt class="descname">EVBREAK_ALL</tt><a class="headerlink" href="#pyev.EVBREAK_ALL" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <em>how</em> value of <a class="reference internal" href="#pyev.EVBREAK_ALL" title="pyev.EVBREAK_ALL"><tt class="xref py py-const docutils literal"><span class="pre">EVBREAK_ALL</span></tt></a> will make all nested
+<a class="reference internal" href="#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.start()</span></tt></a> calls return.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="loop-watcher-methods">
+<span id="id4"></span><h2><a class="reference internal" href="#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a> watcher methods<a class="headerlink" href="#loop-watcher-methods" title="Permalink to this headline">¶</a></h2>
+<p>The following methods are just a convenient way to instantiate watchers attached
+to the loop (although they do not take keyword arguments).</p>
+<dl class="method">
+<dt id="pyev.Loop.io">
+<tt class="descclassname">Loop.</tt><tt class="descname">io</tt><big>(</big><em>fd</em>, <em>events</em>, <em>callback</em><span class="optional">[</span>, <em>data</em>, <em>priority</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Loop.io" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an <a class="reference internal" href="Io.html#pyev.Io" title="pyev.Io"><tt class="xref py py-class docutils literal"><span class="pre">Io</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.timer">
+<tt class="descclassname">Loop.</tt><tt class="descname">timer</tt><big>(</big><em>after</em>, <em>repeat</em>, <em>callback</em><span class="optional">[</span>, <em>data</em>, <em>priority</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Loop.timer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <a class="reference internal" href="Timer.html#pyev.Timer" title="pyev.Timer"><tt class="xref py py-class docutils literal"><span class="pre">Timer</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.periodic">
+<tt class="descclassname">Loop.</tt><tt class="descname">periodic</tt><big>(</big><em>offset</em>, <em>interval</em>, <em>callback</em><span class="optional">[</span>, <em>data</em>, <em>priority</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Loop.periodic" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <a class="reference internal" href="Periodic.html#pyev.Periodic" title="pyev.Periodic"><tt class="xref py py-class docutils literal"><span class="pre">Periodic</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.scheduler">
+<tt class="descclassname">Loop.</tt><tt class="descname">scheduler</tt><big>(</big><em>scheduler</em>, <em>callback</em><span class="optional">[</span>, <em>data</em>, <em>priority</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Loop.scheduler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <a class="reference internal" href="Scheduler.html#pyev.Scheduler" title="pyev.Scheduler"><tt class="xref py py-class docutils literal"><span class="pre">Scheduler</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.signal">
+<tt class="descclassname">Loop.</tt><tt class="descname">signal</tt><big>(</big><em>signum</em>, <em>callback</em><span class="optional">[</span>, <em>data</em>, <em>priority</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Loop.signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <a class="reference internal" href="Signal.html#pyev.Signal" title="pyev.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.child">
+<tt class="descclassname">Loop.</tt><tt class="descname">child</tt><big>(</big><em>pid</em>, <em>trace</em>, <em>callback</em><span class="optional">[</span>, <em>data</em>, <em>priority</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Loop.child" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <a class="reference internal" href="Child.html#pyev.Child" title="pyev.Child"><tt class="xref py py-class docutils literal"><span class="pre">Child</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.idle">
+<tt class="descclassname">Loop.</tt><tt class="descname">idle</tt><big>(</big><em>callback</em><span class="optional">[</span>, <em>data</em>, <em>priority</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Loop.idle" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an <a class="reference internal" href="Idle.html#pyev.Idle" title="pyev.Idle"><tt class="xref py py-class docutils literal"><span class="pre">Idle</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.prepare">
+<tt class="descclassname">Loop.</tt><tt class="descname">prepare</tt><big>(</big><em>callback</em><span class="optional">[</span>, <em>data</em>, <em>priority</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Loop.prepare" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <a class="reference internal" href="Prepare_Check.html#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.check">
+<tt class="descclassname">Loop.</tt><tt class="descname">check</tt><big>(</big><em>callback</em><span class="optional">[</span>, <em>data</em>, <em>priority</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Loop.check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <a class="reference internal" href="Prepare_Check.html#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.embed">
+<tt class="descclassname">Loop.</tt><tt class="descname">embed</tt><big>(</big><em>other</em><span class="optional">[</span>, <em>callback</em>, <em>data</em>, <em>priority</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Loop.embed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an <a class="reference internal" href="Embed.html#pyev.Embed" title="pyev.Embed"><tt class="xref py py-class docutils literal"><span class="pre">Embed</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.fork">
+<tt class="descclassname">Loop.</tt><tt class="descname">fork</tt><big>(</big><em>callback</em><span class="optional">[</span>, <em>data</em>, <em>priority</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Loop.fork" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a <a class="reference internal" href="Fork.html#pyev.Fork" title="pyev.Fork"><tt class="xref py py-class docutils literal"><span class="pre">Fork</span></tt></a> object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Loop.async">
+<tt class="descclassname">Loop.</tt><tt class="descname">async</tt><big>(</big><em>callback</em><span class="optional">[</span>, <em>data</em>, <em>priority</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Loop.async" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns an <a class="reference internal" href="Async.html#pyev.Async" title="pyev.Async"><tt class="xref py py-class docutils literal"><span class="pre">Async</span></tt></a> object.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">Loop</span></tt> &#8212; Event loop</a><ul>
+<li><a class="reference internal" href="#loop-flags"><tt class="docutils literal"><span class="pre">Loop</span></tt> <em>flags</em></a><ul>
+<li><a class="reference internal" href="#behaviour">behaviour</a></li>
+<li><a class="reference internal" href="#backends">backends</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#loop-start-flags"><tt class="docutils literal"><span class="pre">Loop.start()</span></tt> <em>flags</em></a></li>
+<li><a class="reference internal" href="#loop-stop-how"><tt class="docutils literal"><span class="pre">Loop.stop()</span></tt> <em>how</em></a></li>
+<li><a class="reference internal" href="#loop-watcher-methods"><tt class="docutils literal"><span class="pre">Loop</span></tt> watcher methods</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pyev.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Watcher.html"
+                        title="next chapter">Watchers</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Loop.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Watcher.html" title="Watchers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="pyev.html" title="pyev — Python libev interface."
+             >previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

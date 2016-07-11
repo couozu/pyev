@@ -1,0 +1,466 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Watchers &mdash; pyev 0.9.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyev 0.9.0 documentation" href="index.html" />
+    <link rel="up" title="pyev — Python libev interface." href="pyev.html" />
+    <link rel="next" title="Io — I/O watcher" href="Io.html" />
+    <link rel="prev" title="Loop — Event loop" href="Loop.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Io.html" title="Io — I/O watcher"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Loop.html" title="Loop — Event loop"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" accesskey="U"><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="watchers">
+<span id="watcher"></span><h1>Watchers<a class="headerlink" href="#watchers" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Io.html"><tt class="docutils literal"><span class="pre">Io</span></tt> &#8212; I/O watcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Timer.html"><tt class="docutils literal"><span class="pre">Timer</span></tt> &#8212; Timer watcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Periodic.html"><tt class="docutils literal"><span class="pre">Periodic</span></tt> &#8212; Periodic watcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Scheduler.html"><tt class="docutils literal"><span class="pre">Scheduler</span></tt> &#8212; Scheduler watcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Signal.html"><tt class="docutils literal"><span class="pre">Signal</span></tt> &#8212; Signal watcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Child.html"><tt class="docutils literal"><span class="pre">Child</span></tt> &#8212; Child watcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Idle.html"><tt class="docutils literal"><span class="pre">Idle</span></tt> &#8212; Idle watcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Prepare_Check.html"><tt class="docutils literal"><span class="pre">Prepare</span></tt>/<tt class="docutils literal"><span class="pre">Check</span></tt> &#8212; Prepare and Check watchers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Embed.html"><tt class="docutils literal"><span class="pre">Embed</span></tt> &#8212; Embed watcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Fork.html"><tt class="docutils literal"><span class="pre">Fork</span></tt> &#8212; Fork watcher</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Async.html"><tt class="docutils literal"><span class="pre">Async</span></tt> &#8212; Async watcher</a></li>
+</ul>
+</div>
+<div class="section" id="common-methods-and-attributes">
+<h2>Common methods and attributes<a class="headerlink" href="#common-methods-and-attributes" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#pyev.Watcher" title="pyev.Watcher"><tt class="xref py py-class docutils literal"><span class="pre">Watcher</span></tt></a> is the base class for all watchers. Though it is not exposed
+to users, its methods and attributes are described here.</p>
+<dl class="class">
+<dt id="pyev.Watcher">
+<em class="property">class </em><tt class="descclassname">pyev.</tt><tt class="descname">Watcher</tt><a class="headerlink" href="#pyev.Watcher" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#ANATOMY_OF_A_WATCHER">ANATOMY OF A WATCHER</a></p>
+</div>
+<dl class="method">
+<dt id="pyev.Watcher.start">
+<tt class="descname">start</tt><big>(</big><big>)</big><a class="headerlink" href="#pyev.Watcher.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts (activates) the watcher. Only active watchers will receive
+events. If the watcher is already active nothing will happen.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Watcher.stop">
+<tt class="descname">stop</tt><big>(</big><big>)</big><a class="headerlink" href="#pyev.Watcher.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops the watcher if active, and clears the pending status (whether the
+watcher was active or not).</p>
+<p>It is possible that stopped watchers are pending - for example,
+non-repeating timers are being stopped when they become pending - but
+<a class="reference internal" href="#pyev.Watcher.stop" title="pyev.Watcher.stop"><tt class="xref py py-meth docutils literal"><span class="pre">stop()</span></tt></a> ensures that the watcher is neither active nor pending.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Watcher.invoke">
+<tt class="descname">invoke</tt><big>(</big><em>revents</em><big>)</big><a class="headerlink" href="#pyev.Watcher.invoke" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>revents</strong> (<em>int</em>) &#8211; See <a class="reference internal" href="#watcher-revents"><em>Watcher received events</em></a> for valid values.</td>
+</tr>
+</tbody>
+</table>
+<p>Invoke the watcher callback with the given <em>revents</em>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Watcher.clear">
+<tt class="descname">clear</tt><big>(</big><big>)</big> &rarr; int<a class="headerlink" href="#pyev.Watcher.clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>If the watcher is pending, this method clears its pending status and
+returns its <em>revents</em> bitset (as if its callback was invoked). If the
+watcher isn&#8217;t pending it does nothing and returns <tt class="docutils literal"><span class="pre">0</span></tt>.</p>
+<p>Sometimes it can be useful to &#8220;poll&#8221; a watcher instead of waiting for
+its callback to be invoked, which can be accomplished with this function.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Watcher.feed">
+<tt class="descname">feed</tt><big>(</big><em>revents</em><big>)</big><a class="headerlink" href="#pyev.Watcher.feed" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>revents</strong> (<em>int</em>) &#8211; See <a class="reference internal" href="#watcher-revents"><em>Watcher received events</em></a> for valid values.</td>
+</tr>
+</tbody>
+</table>
+<p>Feeds the given <em>revents</em> set into the event loop, as if the specified
+event had happened for the watcher.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Watcher.data">
+<tt class="descname">data</tt><a class="headerlink" href="#pyev.Watcher.data" title="Permalink to this definition">¶</a></dt>
+<dd><p>watcher data.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Watcher.callback">
+<tt class="descname">callback</tt><a class="headerlink" href="#pyev.Watcher.callback" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current watcher callback, its signature must be:</p>
+<dl class="method">
+<dt>
+<tt class="descname">callback</tt><big>(</big><em>watcher</em>, <em>revents</em><big>)</big></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>watcher</strong> (a subclass of <a class="reference internal" href="#pyev.Watcher" title="pyev.Watcher"><tt class="xref py py-class docutils literal"><span class="pre">Watcher</span></tt></a>) &#8211; this watcher.</li>
+<li><strong>revents</strong> (<em>int</em>) &#8211; See <a class="reference internal" href="#watcher-revents"><em>Watcher received events</em></a> for valid values.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>As a rule you should not let the callback return with unhandled
+exceptions. The loop &#8220;does not know&#8221; what to do with an exception
+happening in your callback (it depends largely on what <strong>you</strong> are
+doing), so, by default, it will just print a warning and suppress it.
+This behaviour can be changed by setting <a class="reference internal" href="Loop.html#pyev.Loop.debug" title="pyev.Loop.debug"><tt class="xref py py-attr docutils literal"><span class="pre">Loop.debug</span></tt></a> to
+<tt class="xref py py-const docutils literal"><span class="pre">True</span></tt>, in which case pyev will stop the loop on all errors.
+If you want to act on an exception, you&#8217;re better off doing it in the
+callback (where you are allowed to do anything needed, like logging,
+stopping/restarting the loop, etc.). Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">mycallback</span><span class="p">(</span><span class="n">watcher</span><span class="p">,</span> <span class="n">revents</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">pass</span> <span class="c">#do something interesting</span>
+    <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s">&quot;FATAL!&quot;</span><span class="p">)</span> <span class="c">#this will also log the traceback</span>
+        <span class="n">watcher</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span> <span class="c">#stop the watcher</span>
+        <span class="n">watcher</span><span class="o">.</span><span class="n">loop</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span> <span class="c">#stop the loop</span>
+</pre></div>
+</div>
+<p>If you have a lot of callbacks, use decorators:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">mydecorator</span><span class="p">(</span><span class="n">func</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">wrap</span><span class="p">(</span><span class="n">watcher</span><span class="p">,</span> <span class="n">revents</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">func</span><span class="p">(</span><span class="n">watcher</span><span class="p">,</span> <span class="n">revents</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">RuntimeError</span><span class="p">:</span> <span class="c">#these are not fatal</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s">&quot;stopping {0}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">watcher</span><span class="p">))</span>
+            <span class="n">watcher</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span> <span class="c">#stop the watcher but let the loop continue its merry way</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span> <span class="c">#all other exceptions are fatal</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s">&quot;FATAL: stopping {0} and {1}&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">watcher</span><span class="p">,</span> <span class="n">watcher</span><span class="o">.</span><span class="n">loop</span><span class="p">))</span>
+            <span class="n">watcher</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span> <span class="c">#stop the watcher</span>
+            <span class="n">watcher</span><span class="o">.</span><span class="n">loop</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span> <span class="c">#stop the loop</span>
+    <span class="k">return</span> <span class="n">wrap</span>
+
+<span class="nd">@mydecorator</span>
+<span class="k">def</span> <span class="nf">mycallback</span><span class="p">(</span><span class="n">watcher</span><span class="p">,</span> <span class="n">revents</span><span class="p">):</span>
+    <span class="k">pass</span> <span class="c">#do something interesting</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Watcher.priority">
+<tt class="descname">priority</tt><a class="headerlink" href="#pyev.Watcher.priority" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set and query the priority of the watcher. The priority is a small
+integer between <a class="reference internal" href="#pyev.EV_MAXPRI" title="pyev.EV_MAXPRI"><tt class="xref py py-const docutils literal"><span class="pre">EV_MAXPRI</span></tt></a> and <a class="reference internal" href="#pyev.EV_MINPRI" title="pyev.EV_MINPRI"><tt class="xref py py-const docutils literal"><span class="pre">EV_MINPRI</span></tt></a>. Pending
+watchers with higher priority will be invoked before watchers with lower
+priority, but priority will not keep watchers from being executed
+(except for <a class="reference internal" href="Idle.html#pyev.Idle" title="pyev.Idle"><tt class="xref py py-class docutils literal"><span class="pre">Idle</span></tt></a> watchers).
+If you need to suppress invocation when higher priority events are
+pending you need to look at <a class="reference internal" href="Idle.html#pyev.Idle" title="pyev.Idle"><tt class="xref py py-class docutils literal"><span class="pre">Idle</span></tt></a> watchers, which provide
+this functionality.</p>
+<p>Setting a priority outside the range of <a class="reference internal" href="#pyev.EV_MINPRI" title="pyev.EV_MINPRI"><tt class="xref py py-const docutils literal"><span class="pre">EV_MINPRI</span></tt></a> to
+<a class="reference internal" href="#pyev.EV_MAXPRI" title="pyev.EV_MAXPRI"><tt class="xref py py-const docutils literal"><span class="pre">EV_MAXPRI</span></tt></a> is fine, as long as you do not mind that the
+priority value you query might or might not have been clamped to the
+valid range.</p>
+<p>The default priority used by watchers when no priority has been set is
+always <tt class="docutils literal"><span class="pre">0</span></tt>.</p>
+<p>You must not change the priority of a watcher as long as it is active or
+pending.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#WATCHER_PRIORITY_MODELS">WATCHER PRIORITY MODELS</a></p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Watcher.loop">
+<tt class="descname">loop</tt><a class="headerlink" href="#pyev.Watcher.loop" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p><a class="reference internal" href="Loop.html#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a> object responsible for the watcher.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Watcher.active">
+<tt class="descname">active</tt><a class="headerlink" href="#pyev.Watcher.active" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p><tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if the watcher is active (i.e. it has been started and
+not yet been stopped), <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt> otherwise.</p>
+<p>As long as a watcher is active you must not modify it.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Watcher.pending">
+<tt class="descname">pending</tt><a class="headerlink" href="#pyev.Watcher.pending" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p><tt class="xref py py-const docutils literal"><span class="pre">True</span></tt> if the watcher is pending, (i.e. it has outstanding
+events but its callback has not yet been invoked), <tt class="xref py py-const docutils literal"><span class="pre">False</span></tt>
+otherwise.</p>
+<p>As long as a watcher is pending (but not active) you must not change its
+priority.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="watcher-received-events">
+<span id="watcher-revents"></span><h2>Watcher received events<a class="headerlink" href="#watcher-received-events" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="pyev.EV_IO">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_IO</tt><a class="headerlink" href="#pyev.EV_IO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_READ">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_READ</tt><a class="headerlink" href="#pyev.EV_READ" title="Permalink to this definition">¶</a></dt>
+<dd><p>The file descriptor in the <a class="reference internal" href="Io.html#pyev.Io" title="pyev.Io"><tt class="xref py py-class docutils literal"><span class="pre">Io</span></tt></a> watcher has become readable.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_WRITE">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_WRITE</tt><a class="headerlink" href="#pyev.EV_WRITE" title="Permalink to this definition">¶</a></dt>
+<dd><p>The file descriptor in the <a class="reference internal" href="Io.html#pyev.Io" title="pyev.Io"><tt class="xref py py-class docutils literal"><span class="pre">Io</span></tt></a> watcher has become writable.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_TIMER">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_TIMER</tt><a class="headerlink" href="#pyev.EV_TIMER" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="Timer.html#pyev.Timer" title="pyev.Timer"><tt class="xref py py-class docutils literal"><span class="pre">Timer</span></tt></a> watcher has timed out.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_PERIODIC">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_PERIODIC</tt><a class="headerlink" href="#pyev.EV_PERIODIC" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="Periodic.html#pyev.Periodic" title="pyev.Periodic"><tt class="xref py py-class docutils literal"><span class="pre">Periodic</span></tt></a> watcher has timed out.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_SIGNAL">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_SIGNAL</tt><a class="headerlink" href="#pyev.EV_SIGNAL" title="Permalink to this definition">¶</a></dt>
+<dd><p>The signal specified in the <a class="reference internal" href="Signal.html#pyev.Signal" title="pyev.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> watcher has been received by
+a thread.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_CHILD">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_CHILD</tt><a class="headerlink" href="#pyev.EV_CHILD" title="Permalink to this definition">¶</a></dt>
+<dd><p>The pid specified in the <a class="reference internal" href="Child.html#pyev.Child" title="pyev.Child"><tt class="xref py py-class docutils literal"><span class="pre">Child</span></tt></a> watcher has received a status
+change.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_IDLE">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_IDLE</tt><a class="headerlink" href="#pyev.EV_IDLE" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="Idle.html#pyev.Idle" title="pyev.Idle"><tt class="xref py py-class docutils literal"><span class="pre">Idle</span></tt></a> watcher has determined that you have nothing better to
+do.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_PREPARE">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_PREPARE</tt><a class="headerlink" href="#pyev.EV_PREPARE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_CHECK">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_CHECK</tt><a class="headerlink" href="#pyev.EV_CHECK" title="Permalink to this definition">¶</a></dt>
+<dd><p>All <a class="reference internal" href="Prepare_Check.html#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a> watchers are invoked just before <a class="reference internal" href="Loop.html#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.start()</span></tt></a>
+starts to gather new events, and all <a class="reference internal" href="Prepare_Check.html#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> watchers are queued
+(not invoked) just after <a class="reference internal" href="Loop.html#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.start()</span></tt></a> has gathered them, but before
+it queues any callbacks for any received events. That means <a class="reference internal" href="Prepare_Check.html#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a>
+watchers are the last watchers invoked before the event loop sleeps or polls
+for new events, and <a class="reference internal" href="Prepare_Check.html#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> watchers will be invoked before any
+other watchers of the same or lower priority within an event loop iteration.
+Callbacks of both watcher types can start and stop as many watchers as they
+want, and all of them will be taken into account (for example, a
+<a class="reference internal" href="Prepare_Check.html#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a> watcher might start an <a class="reference internal" href="Idle.html#pyev.Idle" title="pyev.Idle"><tt class="xref py py-class docutils literal"><span class="pre">Idle</span></tt></a> watcher to keep
+<a class="reference internal" href="Loop.html#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.start()</span></tt></a> from blocking).</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_EMBED">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_EMBED</tt><a class="headerlink" href="#pyev.EV_EMBED" title="Permalink to this definition">¶</a></dt>
+<dd><p>The embedded event loop specified in the <a class="reference internal" href="Embed.html#pyev.Embed" title="pyev.Embed"><tt class="xref py py-class docutils literal"><span class="pre">Embed</span></tt></a> watcher needs
+attention.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_FORK">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_FORK</tt><a class="headerlink" href="#pyev.EV_FORK" title="Permalink to this definition">¶</a></dt>
+<dd><p>The event loop has been resumed in the child process after fork (see
+<a class="reference internal" href="Fork.html#pyev.Fork" title="pyev.Fork"><tt class="xref py py-class docutils literal"><span class="pre">Fork</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_ASYNC">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_ASYNC</tt><a class="headerlink" href="#pyev.EV_ASYNC" title="Permalink to this definition">¶</a></dt>
+<dd><p>The given <a class="reference internal" href="Async.html#pyev.Async" title="pyev.Async"><tt class="xref py py-class docutils literal"><span class="pre">Async</span></tt></a> watcher has been asynchronously notified.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_CUSTOM">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_CUSTOM</tt><a class="headerlink" href="#pyev.EV_CUSTOM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Not ever sent (or otherwise used) by libev itself, but can be freely used by
+users to signal watchers (e.g. via <a class="reference internal" href="#pyev.Watcher.feed" title="pyev.Watcher.feed"><tt class="xref py py-meth docutils literal"><span class="pre">Watcher.feed()</span></tt></a>).</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_ERROR">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_ERROR</tt><a class="headerlink" href="#pyev.EV_ERROR" title="Permalink to this definition">¶</a></dt>
+<dd><p>An unspecified error has occurred, the watcher has been stopped. This might
+happen because the watcher could not be properly started because libev ran
+out of memory, a file descriptor was found to be closed or any other problem.
+libev considers these application bugs.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">pyev handle this event as a fatal error. On receiving this event pyev
+will <strong>stop the loop</strong> (and the watcher). The callback will <strong>not</strong> be
+invoked. In practice users should never receive this event (still
+present for testing purposes).</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="watcher-priorities">
+<span id="id1"></span><h2>Watcher priorities<a class="headerlink" href="#watcher-priorities" title="Permalink to this headline">¶</a></h2>
+<dl class="data">
+<dt id="pyev.EV_MINPRI">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_MINPRI</tt><a class="headerlink" href="#pyev.EV_MINPRI" title="Permalink to this definition">¶</a></dt>
+<dd><p>default: <tt class="docutils literal"><span class="pre">-2</span></tt>.</p>
+</dd></dl>
+
+<dl class="data">
+<dt id="pyev.EV_MAXPRI">
+<tt class="descclassname">pyev.</tt><tt class="descname">EV_MAXPRI</tt><a class="headerlink" href="#pyev.EV_MAXPRI" title="Permalink to this definition">¶</a></dt>
+<dd><p>default: <tt class="docutils literal"><span class="pre">2</span></tt>.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Watchers</a><ul>
+<li><a class="reference internal" href="#common-methods-and-attributes">Common methods and attributes</a></li>
+<li><a class="reference internal" href="#watcher-received-events">Watcher received events</a></li>
+<li><a class="reference internal" href="#watcher-priorities">Watcher priorities</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Loop.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">Loop</span></tt> &#8212; Event loop</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Io.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">Io</span></tt> &#8212; I/O watcher</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Watcher.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Io.html" title="Io — I/O watcher"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Loop.html" title="Loop — Event loop"
+             >previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

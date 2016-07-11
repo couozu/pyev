@@ -1,0 +1,291 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>pyev — Python libev interface. &mdash; pyev 0.9.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyev 0.9.0 documentation" href="index.html" />
+    <link rel="next" title="Loop — Event loop" href="Loop.html" />
+    <link rel="prev" title="Welcome to pyev’s documentation!" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Loop.html" title="Loop — Event loop"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to pyev’s documentation!"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-pyev">
+<span id="pyev-python-libev-interface"></span><span id="pyev"></span><h1><a class="reference internal" href="#module-pyev" title="pyev: Python libev interface. (POSIX)"><tt class="xref py py-mod docutils literal"><span class="pre">pyev</span></tt></a> &#8212; Python libev interface.<a class="headerlink" href="#module-pyev" title="Permalink to this headline">¶</a></h1>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod">libev&#8217;s documentation</a>.</p>
+</div>
+<dl class="function">
+<dt id="pyev.default_loop">
+<tt class="descclassname">pyev.</tt><tt class="descname">default_loop</tt><big>(</big><span class="optional">[</span><em>flags=EVFLAG_AUTO</em>, <em>callback=None</em>, <em>data=None</em>, <em>io_interval=0.0</em>, <em>timeout_interval=0.0</em>, <em>debug=False</em><span class="optional">]</span><big>)</big> &rarr; the &quot;default loop&quot;<a class="headerlink" href="#pyev.default_loop" title="Permalink to this definition">¶</a></dt>
+<dd><p>This will instanciate the <em>default loop</em> if it hasn&#8217;t been created yet
+and return it. If the <em>default loop</em> was already initialized this simply
+returns it (and ignores the arguments).</p>
+<p>The <em>default loop</em> is the only loop that can handle <a class="reference internal" href="Child.html#pyev.Child" title="pyev.Child"><tt class="xref py py-class docutils literal"><span class="pre">Child</span></tt></a>
+watchers, and to do this, it always registers a handler for
+<tt class="xref c c-data docutils literal"><span class="pre">SIGCHLD</span></tt>. If this is a problem for your application you can either
+instanciate a <a class="reference internal" href="Loop.html#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a> which doesn&#8217;t do that, or you can simply
+overwrite the <tt class="xref c c-data docutils literal"><span class="pre">SIGCHLD</span></tt> signal handler.</p>
+<p>See <a class="reference internal" href="Loop.html#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a> for details about the arguments.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you don&#8217;t know what loop to use, use the one returned from this
+function.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyev.supported_backends">
+<tt class="descclassname">pyev.</tt><tt class="descname">supported_backends</tt><big>(</big><big>)</big> &rarr; int<a class="headerlink" href="#pyev.supported_backends" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the set of all backends (i.e. their corresponding EVBACKEND_* value)
+compiled into this binary of libev (independent of their availability on the
+system you are running on).</p>
+<p>See <a class="reference internal" href="Loop.html#loop-backends"><em>backends</em></a> for a description of the set values.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyev.recommended_backends">
+<tt class="descclassname">pyev.</tt><tt class="descname">recommended_backends</tt><big>(</big><big>)</big> &rarr; int<a class="headerlink" href="#pyev.recommended_backends" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the set of all backends compiled into this binary of libev and also
+recommended for this platform, meaning it will work for most file descriptor
+types. This set is often smaller than the one returned by
+<a class="reference internal" href="#pyev.supported_backends" title="pyev.supported_backends"><tt class="xref py py-func docutils literal"><span class="pre">supported_backends()</span></tt></a>, as for example <tt class="docutils literal"><span class="pre">kqueue</span></tt> is broken on most
+BSDs and will not be auto-detected unless you explicitly request it.
+This is the set of backends that libev will probe for you if you specify no
+backends explicitly.</p>
+<p>See <a class="reference internal" href="Loop.html#loop-backends"><em>backends</em></a> for a description of the set values.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyev.embeddable_backends">
+<tt class="descclassname">pyev.</tt><tt class="descname">embeddable_backends</tt><big>(</big><big>)</big> &rarr; int<a class="headerlink" href="#pyev.embeddable_backends" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the set of backends that are embeddable in other event loops.
+This value is platform-specific but can include backends not available on
+the current system. To find which embeddable backends might be supported on
+the current system, you would need to look at:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">pyev</span><span class="o">.</span><span class="n">embeddable_backends</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">pyev</span><span class="o">.</span><span class="n">supported_backends</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>likewise for recommended ones:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">pyev</span><span class="o">.</span><span class="n">embeddable_backends</span><span class="p">()</span> <span class="o">&amp;</span> <span class="n">pyev</span><span class="o">.</span><span class="n">recommended_backends</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="Loop.html#loop-backends"><em>backends</em></a> for a description of the set values and
+<a class="reference internal" href="Embed.html#pyev.Embed" title="pyev.Embed"><tt class="xref py py-class docutils literal"><span class="pre">Embed</span></tt></a> watchers for more information about embedding loops.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyev.time">
+<tt class="descclassname">pyev.</tt><tt class="descname">time</tt><big>(</big><big>)</big> &rarr; float<a class="headerlink" href="#pyev.time" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current time as libev would use it.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <a class="reference internal" href="Loop.html#pyev.Loop.now" title="pyev.Loop.now"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.now()</span></tt></a> method is usually faster and also often returns
+the timestamp you actually want to know.</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyev.sleep">
+<tt class="descclassname">pyev.</tt><tt class="descname">sleep</tt><big>(</big><em>interval</em><big>)</big><a class="headerlink" href="#pyev.sleep" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>interval</strong> (<em>float</em>) &#8211; interval in seconds.</td>
+</tr>
+</tbody>
+</table>
+<p>Sleep for the given <em>interval</em>. The current thread will be blocked until
+either it is interrupted or the given time interval has passed
+(approximately - it might return a bit earlier even if not interrupted).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The range of the <em>interval</em> is limited - libev only guarantees to work
+with sleep times of up to one day (interval &lt;= 86400.0).</p>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyev.feed_signal">
+<tt class="descclassname">pyev.</tt><tt class="descname">feed_signal</tt><big>(</big><em>signum</em><big>)</big><a class="headerlink" href="#pyev.feed_signal" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>signum</strong> (<em>int</em>) &#8211; signal number to feed libev.</td>
+</tr>
+</tbody>
+</table>
+<p>This function can be used to &#8220;simulate&#8221; a signal receive. It is completely
+safe to call this function at any time, from any context, including signal
+handlers or random threads. Its main use is to customise signal handling in
+your process, especially in the presence of threads.</p>
+<p>For example, using the <tt class="xref py py-mod docutils literal"><span class="pre">signal</span></tt> module, you could ignore signals by
+default in all threads (and specify <a class="reference internal" href="Loop.html#pyev.EVFLAG_NOSIGMASK" title="pyev.EVFLAG_NOSIGMASK"><tt class="xref py py-const docutils literal"><span class="pre">EVFLAG_NOSIGMASK</span></tt></a> when
+creating any loops), and in one thread, wait for signals, then &#8220;deliver&#8221;
+them to libev by calling <a class="reference internal" href="#pyev.feed_signal" title="pyev.feed_signal"><tt class="xref py py-func docutils literal"><span class="pre">feed_signal()</span></tt></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="pyev.abi_version">
+<tt class="descclassname">pyev.</tt><tt class="descname">abi_version</tt><big>(</big><big>)</big> &rarr; tuple of ints<a class="headerlink" href="#pyev.abi_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a tuple of major, minor version numbers. These numbers represent the
+libev ABI version that this module is running.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is not the same as libev version (although it might coincide).</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.__version__">
+<tt class="descclassname">pyev.</tt><tt class="descname">__version__</tt><a class="headerlink" href="#pyev.__version__" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#module-pyev" title="pyev: Python libev interface. (POSIX)"><tt class="xref py py-mod docutils literal"><span class="pre">pyev</span></tt></a>&#8216;s version.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="pyev.Error">
+<em class="property">exception </em><tt class="descclassname">pyev.</tt><tt class="descname">Error</tt><a class="headerlink" href="#pyev.Error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised when an error specific to pyev happens.</p>
+</dd></dl>
+
+<div class="section" id="objects">
+<h2>Objects<a class="headerlink" href="#objects" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="Loop.html"><tt class="docutils literal"><span class="pre">Loop</span></tt> &#8212; Event loop</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="Watcher.html">Watchers</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="Io.html"><tt class="docutils literal"><span class="pre">Io</span></tt> &#8212; I/O watcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Timer.html"><tt class="docutils literal"><span class="pre">Timer</span></tt> &#8212; Timer watcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Periodic.html"><tt class="docutils literal"><span class="pre">Periodic</span></tt> &#8212; Periodic watcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Scheduler.html"><tt class="docutils literal"><span class="pre">Scheduler</span></tt> &#8212; Scheduler watcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Signal.html"><tt class="docutils literal"><span class="pre">Signal</span></tt> &#8212; Signal watcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Child.html"><tt class="docutils literal"><span class="pre">Child</span></tt> &#8212; Child watcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Idle.html"><tt class="docutils literal"><span class="pre">Idle</span></tt> &#8212; Idle watcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Prepare_Check.html"><tt class="docutils literal"><span class="pre">Prepare</span></tt>/<tt class="docutils literal"><span class="pre">Check</span></tt> &#8212; Prepare and Check watchers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Embed.html"><tt class="docutils literal"><span class="pre">Embed</span></tt> &#8212; Embed watcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Fork.html"><tt class="docutils literal"><span class="pre">Fork</span></tt> &#8212; Fork watcher</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Async.html"><tt class="docutils literal"><span class="pre">Async</span></tt> &#8212; Async watcher</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#"><tt class="docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a><ul>
+<li><a class="reference internal" href="#objects">Objects</a><ul>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to pyev&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Loop.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">Loop</span></tt> &#8212; Event loop</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/pyev.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Loop.html" title="Loop — Event loop"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to pyev’s documentation!"
+             >previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

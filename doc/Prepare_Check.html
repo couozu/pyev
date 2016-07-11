@@ -1,0 +1,183 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Prepare/Check — Prepare and Check watchers &mdash; pyev 0.9.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyev 0.9.0 documentation" href="index.html" />
+    <link rel="up" title="Watchers" href="Watcher.html" />
+    <link rel="next" title="Embed — Embed watcher" href="Embed.html" />
+    <link rel="prev" title="Idle — Idle watcher" href="Idle.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Embed.html" title="Embed — Embed watcher"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Idle.html" title="Idle — Idle watcher"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" accesskey="U">Watchers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="prepare-check-prepare-and-check-watchers">
+<span id="prepare-check"></span><h1><a class="reference internal" href="#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a>/<a class="reference internal" href="#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> &#8212; Prepare and Check watchers<a class="headerlink" href="#prepare-check-prepare-and-check-watchers" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyev.Prepare">
+<em class="property">class </em><tt class="descclassname">pyev.</tt><tt class="descname">Prepare</tt><big>(</big><em>loop</em>, <em>callback</em><span class="optional">[</span>, <em>data=None</em>, <em>priority=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Prepare" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="class">
+<dt id="pyev.Check">
+<em class="property">class </em><tt class="descclassname">pyev.</tt><tt class="descname">Check</tt><big>(</big><em>loop</em>, <em>callback</em><span class="optional">[</span>, <em>data=None</em>, <em>priority=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Check" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>loop</strong> (<a class="reference internal" href="Loop.html#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a>) &#8211; loop object responsible for this watcher (accessible through
+<a class="reference internal" href="Watcher.html#pyev.Watcher.loop" title="pyev.Watcher.loop"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.loop</span></tt></a>).</li>
+<li><strong>callback</strong> (<em>callable</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.callback" title="pyev.Watcher.callback"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.callback</span></tt></a>.</li>
+<li><strong>data</strong> (<em>object</em>) &#8211; any Python object you might want to attach to the
+watcher (stored in <a class="reference internal" href="Watcher.html#pyev.Watcher.data" title="pyev.Watcher.data"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.data</span></tt></a>).</li>
+<li><strong>priority</strong> (<em>int</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.priority" title="pyev.Watcher.priority"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.priority</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a> and <a class="reference internal" href="#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> watchers are often (but not
+always) used in pairs: <a class="reference internal" href="#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a> watchers get invoked before the
+process blocks and <a class="reference internal" href="#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> watchers afterwards.</p>
+<p>You must not call <a class="reference internal" href="Loop.html#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.start()</span></tt></a> or similar methods that enter the
+current event loop from either <a class="reference internal" href="#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a> or <a class="reference internal" href="#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a>
+watchers. Other loops than the current one are fine, however. The rationale
+behind this is that you do not need to check for recursion in those
+watchers, i.e. the sequence will always be: <a class="reference internal" href="#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a> -&gt; blocking
+-&gt; <a class="reference internal" href="#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a>, so if you have one watcher of each kind they will
+always be called in pairs bracketing the blocking call.</p>
+<p>Their main purpose is to integrate other event mechanisms into libev and
+their use is somewhat advanced. They could be used, for example, to track
+variable changes, implement your own watchers, integrate net-snmp or a
+coroutine library and lots more. They are also occasionally useful if you
+cache some data and want to flush it before blocking.</p>
+<p>It is recommended to give <a class="reference internal" href="#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> watchers highest
+(<a class="reference internal" href="Watcher.html#pyev.EV_MAXPRI" title="pyev.EV_MAXPRI"><tt class="xref py py-const docutils literal"><span class="pre">EV_MAXPRI</span></tt></a>) priority, to ensure that they are being run before
+any other watchers after the poll (this doesn&#8217;t matter for
+<a class="reference internal" href="#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a> watchers).</p>
+<p>Also, <a class="reference internal" href="#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> watchers (and <a class="reference internal" href="#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a> watchers, too)
+should not activate (&#8220;feed&#8221;) events into libev. While libev fully supports
+this, they might get executed before other <a class="reference internal" href="#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> watchers did
+their job (as <a class="reference internal" href="#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> watchers are often used to embed other
+(non-libev) event loops those other event loops might be in an unusable
+state until their <a class="reference internal" href="#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> watcher ran).</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#code_ev_prepare_code_and_code_ev_che">ev_prepare and ev_check - customise your event loop!</a></p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#Abusing_an_code_ev_check_code_watche">Abusing an ev_check watcher for its side-effect</a></li>
+</ul>
+</div></blockquote>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Idle.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">Idle</span></tt> &#8212; Idle watcher</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Embed.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">Embed</span></tt> &#8212; Embed watcher</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Prepare_Check.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Embed.html" title="Embed — Embed watcher"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Idle.html" title="Idle — Idle watcher"
+             >previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" >Watchers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

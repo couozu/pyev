@@ -1,0 +1,168 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Idle — Idle watcher &mdash; pyev 0.9.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyev 0.9.0 documentation" href="index.html" />
+    <link rel="up" title="Watchers" href="Watcher.html" />
+    <link rel="next" title="Prepare/Check — Prepare and Check watchers" href="Prepare_Check.html" />
+    <link rel="prev" title="Child — Child watcher" href="Child.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Prepare_Check.html" title="Prepare/Check — Prepare and Check watchers"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Child.html" title="Child — Child watcher"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" accesskey="U">Watchers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="idle">
+<span id="idle-idle-watcher"></span><h1><a class="reference internal" href="#pyev.Idle" title="pyev.Idle"><tt class="xref py py-class docutils literal"><span class="pre">Idle</span></tt></a> &#8212; Idle watcher<a class="headerlink" href="#idle" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyev.Idle">
+<em class="property">class </em><tt class="descclassname">pyev.</tt><tt class="descname">Idle</tt><big>(</big><em>loop</em>, <em>callback</em><span class="optional">[</span>, <em>data=None</em>, <em>priority=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Idle" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>loop</strong> (<a class="reference internal" href="Loop.html#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a>) &#8211; loop object responsible for this watcher (accessible through
+<a class="reference internal" href="Watcher.html#pyev.Watcher.loop" title="pyev.Watcher.loop"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.loop</span></tt></a>).</li>
+<li><strong>callback</strong> (<em>callable</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.callback" title="pyev.Watcher.callback"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.callback</span></tt></a>.</li>
+<li><strong>data</strong> (<em>object</em>) &#8211; any Python object you might want to attach to the
+watcher (stored in <a class="reference internal" href="Watcher.html#pyev.Watcher.data" title="pyev.Watcher.data"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.data</span></tt></a>).</li>
+<li><strong>priority</strong> (<em>int</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.priority" title="pyev.Watcher.priority"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.priority</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#pyev.Idle" title="pyev.Idle"><tt class="xref py py-class docutils literal"><span class="pre">Idle</span></tt></a> watchers trigger events when no other events of the same or
+higher priority are pending (<a class="reference internal" href="Prepare_Check.html#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a>, <a class="reference internal" href="Prepare_Check.html#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> and
+other <a class="reference internal" href="#pyev.Idle" title="pyev.Idle"><tt class="xref py py-class docutils literal"><span class="pre">Idle</span></tt></a> watchers do not count as receiving &#8220;events&#8221;).</p>
+<p>That is, as long as your process is busy handling sockets or timeouts (or
+even signals) of the same or higher priority it will not be triggered. But
+when your process is idle (or only lower-priority watchers are pending), the
+<a class="reference internal" href="#pyev.Idle" title="pyev.Idle"><tt class="xref py py-class docutils literal"><span class="pre">Idle</span></tt></a> watchers are being called once per event loop iteration -
+until stopped, that is, or your process receives more events and becomes
+busy again with higher priority stuff.</p>
+<p>The most noteworthy effect is that as long as any idle watchers are active,
+the process will not block when waiting for new events.</p>
+<p>Apart from keeping your process non-blocking (which is a useful effect on
+its own sometimes), <a class="reference internal" href="#pyev.Idle" title="pyev.Idle"><tt class="xref py py-class docutils literal"><span class="pre">Idle</span></tt></a> watchers are a good place to do
+&#8216;pseudo-background processing&#8217;, or delay processing stuff to after the event
+loop has handled all outstanding events.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#code_ev_idle_code_when_you_ve_got_no">ev_idle - when you&#8217;ve got nothing better to do...</a></p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#Abusing_an_code_ev_idle_code_watcher">Abusing an ev_idle watcher for its side-effect</a></li>
+</ul>
+</div></blockquote>
+</div>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Child.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">Child</span></tt> &#8212; Child watcher</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Prepare_Check.html"
+                        title="next chapter"><tt class="docutils literal docutils literal"><span class="pre">Prepare</span></tt>/<tt class="docutils literal docutils literal"><span class="pre">Check</span></tt> &#8212; Prepare and Check watchers</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Idle.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Prepare_Check.html" title="Prepare/Check — Prepare and Check watchers"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Child.html" title="Child — Child watcher"
+             >previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" >Watchers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

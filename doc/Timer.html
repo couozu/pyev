@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Timer — Timer watcher &mdash; pyev 0.9.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyev 0.9.0 documentation" href="index.html" />
+    <link rel="up" title="Watchers" href="Watcher.html" />
+    <link rel="next" title="Periodic — Periodic watcher" href="Periodic.html" />
+    <link rel="prev" title="Io — I/O watcher" href="Io.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Periodic.html" title="Periodic — Periodic watcher"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Io.html" title="Io — I/O watcher"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" accesskey="U">Watchers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="timer-timer-watcher">
+<span id="timer"></span><h1><a class="reference internal" href="#pyev.Timer" title="pyev.Timer"><tt class="xref py py-class docutils literal"><span class="pre">Timer</span></tt></a> &#8212; Timer watcher<a class="headerlink" href="#timer-timer-watcher" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyev.Timer">
+<em class="property">class </em><tt class="descclassname">pyev.</tt><tt class="descname">Timer</tt><big>(</big><em>after</em>, <em>repeat</em>, <em>loop</em>, <em>callback</em><span class="optional">[</span>, <em>data=None</em>, <em>priority=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Timer" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>after</strong> (<em>float</em>) &#8211; configure the timer to trigger after <em>after</em> seconds.</li>
+<li><strong>repeat</strong> (<em>float</em>) &#8211; If repeat is <tt class="docutils literal"><span class="pre">0.0</span></tt>, then it will automatically be
+stopped once the timeout is reached. If it is positive, then the
+timer will automatically be configured to trigger again every
+<em>repeat</em> seconds later, until stopped manually.</li>
+<li><strong>loop</strong> (<a class="reference internal" href="Loop.html#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a>) &#8211; loop object responsible for this watcher (accessible through
+<a class="reference internal" href="Watcher.html#pyev.Watcher.loop" title="pyev.Watcher.loop"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.loop</span></tt></a>).</li>
+<li><strong>callback</strong> (<em>callable</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.callback" title="pyev.Watcher.callback"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.callback</span></tt></a>.</li>
+<li><strong>data</strong> (<em>object</em>) &#8211; any Python object you might want to attach to the
+watcher (stored in <a class="reference internal" href="Watcher.html#pyev.Watcher.data" title="pyev.Watcher.data"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.data</span></tt></a>).</li>
+<li><strong>priority</strong> (<em>int</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.priority" title="pyev.Watcher.priority"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.priority</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#pyev.Timer" title="pyev.Timer"><tt class="xref py py-class docutils literal"><span class="pre">Timer</span></tt></a> watchers are simple relative timers that generate an event
+after a given time, and optionally repeating in regular intervals after that.</p>
+<p>The timers are based on real time, that is, if you register an event that
+times out after an hour and you reset your system clock to January last
+year, it will still time out after (roughly) one hour. &#8220;Roughly&#8221; because
+detecting time jumps is hard, and some inaccuracies are unavoidable.</p>
+<p>The callback is guaranteed to be invoked only after its timeout has passed
+(not <em>at</em>, so on systems with very low-resolution clocks this might
+introduce a small delay). If multiple timers become ready during the same
+loop iteration then the ones with earlier time-out values are invoked before
+ones of the same priority with later time-out values (but this is no longer
+true when a callback calls <a class="reference internal" href="Loop.html#pyev.Loop.start" title="pyev.Loop.start"><tt class="xref py py-meth docutils literal"><span class="pre">Loop.start()</span></tt></a> recursively).</p>
+<p>The timer itself will do a best-effort at avoiding drift, that is, if you
+configure a timer to trigger every <tt class="docutils literal"><span class="pre">10</span></tt> seconds, then it will normally
+trigger at exactly <tt class="docutils literal"><span class="pre">10</span></tt> second intervals. If, however, your program cannot
+keep up with the timer (because it takes longer than those <tt class="docutils literal"><span class="pre">10</span></tt> seconds to
+do stuff) the timer will not fire more than once per event loop iteration.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#code_ev_timer_code_relative_and_opti">ev_timer - relative and optionally repeating timeouts</a></p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#Be_smart_about_timeouts">Be smart about timeouts</a></li>
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problem_of_being_too_ear">The special problem of being too early</a></li>
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problem_of_time_updates">The special problem of time updates</a></li>
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problem_of_unsynchronise">The special problems of unsynchronised clocks</a></li>
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problems_of_suspended_an">The special problems of suspended animation</a></li>
+</ul>
+</div></blockquote>
+</div>
+<dl class="method">
+<dt id="pyev.Timer.set">
+<tt class="descname">set</tt><big>(</big><em>after</em>, <em>repeat</em><big>)</big><a class="headerlink" href="#pyev.Timer.set" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>after</strong> (<em>float</em>) &#8211; configure the timer to trigger after <em>after</em> seconds.</li>
+<li><strong>repeat</strong> (<em>float</em>) &#8211; If repeat is <tt class="docutils literal"><span class="pre">0.0</span></tt>, then it will automatically be
+stopped once the timeout is reached. If it is positive, then the
+timer will automatically be configured to trigger again every
+<em>repeat</em> seconds later, until stopped manually.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Configures the watcher.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="pyev.Timer.reset">
+<tt class="descname">reset</tt><big>(</big><big>)</big><a class="headerlink" href="#pyev.Timer.reset" title="Permalink to this definition">¶</a></dt>
+<dd><p>This will act as if the timer timed out and restart it again if it is
+repeating. It basically works like calling <tt class="xref py py-meth docutils literal"><span class="pre">stop()</span></tt>, updating the
+timeout to the <a class="reference internal" href="#pyev.Timer.repeat" title="pyev.Timer.repeat"><tt class="xref py py-attr docutils literal"><span class="pre">repeat</span></tt></a> value and calling <tt class="xref py py-meth docutils literal"><span class="pre">start()</span></tt>.
+The exact semantics are:</p>
+<ul class="simple">
+<li>if the timer is pending, the pending status is always cleared.</li>
+<li>if the timer is started but non-repeating, stop it (as if it timed out,
+without invoking it).</li>
+<li>if the timer is repeating, make the <a class="reference internal" href="#pyev.Timer.repeat" title="pyev.Timer.repeat"><tt class="xref py py-attr docutils literal"><span class="pre">repeat</span></tt></a> value the new
+timeout and start the timer, if necessary.</li>
+</ul>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#Be_smart_about_timeouts">Be smart about timeouts</a>,
+for a usage example.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Timer.repeat">
+<tt class="descname">repeat</tt><a class="headerlink" href="#pyev.Timer.repeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>The current <em>repeat</em> value. Will be used each time the watcher times out
+or <a class="reference internal" href="#pyev.Timer.reset" title="pyev.Timer.reset"><tt class="xref py py-meth docutils literal"><span class="pre">reset()</span></tt></a> is called, and determines the next timeout (if any),
+which is also when any modifications are taken into account.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Timer.remaining">
+<tt class="descname">remaining</tt><a class="headerlink" href="#pyev.Timer.remaining" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>The remaining time until a timer fires. If the timer is active,
+then this time is relative to the current event loop time, otherwise
+it&#8217;s the timeout value currently configured.</p>
+<p>That is, after instanciating a <a class="reference internal" href="#pyev.Timer" title="pyev.Timer"><tt class="xref py py-class docutils literal"><span class="pre">Timer</span></tt></a> with an <em>after</em> value
+of <tt class="docutils literal"><span class="pre">5.0</span></tt> and a <em>repeat</em> value of <tt class="docutils literal"><span class="pre">7.0</span></tt>, <a class="reference internal" href="#pyev.Timer.remaining" title="pyev.Timer.remaining"><tt class="xref py py-attr docutils literal"><span class="pre">remaining</span></tt></a> is
+<tt class="docutils literal"><span class="pre">5.0</span></tt>. When the timer is started and one second passes,
+<a class="reference internal" href="#pyev.Timer.remaining" title="pyev.Timer.remaining"><tt class="xref py py-attr docutils literal"><span class="pre">remaining</span></tt></a> will be <tt class="docutils literal"><span class="pre">4.0</span></tt>. When the timer expires and is
+restarted, it will be roughly <tt class="docutils literal"><span class="pre">7.0</span></tt> (likely slightly less as
+callback invocation takes some time, too), and so on.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Io.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal"><span class="pre">Io</span></tt> &#8212; I/O watcher</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Periodic.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">Periodic</span></tt> &#8212; Periodic watcher</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Timer.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Periodic.html" title="Periodic — Periodic watcher"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Io.html" title="Io — I/O watcher"
+             >previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" >Watchers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

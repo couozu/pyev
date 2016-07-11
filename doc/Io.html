@@ -1,0 +1,218 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Io — I/O watcher &mdash; pyev 0.9.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyev 0.9.0 documentation" href="index.html" />
+    <link rel="up" title="Watchers" href="Watcher.html" />
+    <link rel="next" title="Timer — Timer watcher" href="Timer.html" />
+    <link rel="prev" title="Watchers" href="Watcher.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Timer.html" title="Timer — Timer watcher"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Watcher.html" title="Watchers"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" accesskey="U">Watchers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="io-i-o-watcher">
+<span id="io"></span><h1><a class="reference internal" href="#pyev.Io" title="pyev.Io"><tt class="xref py py-class docutils literal"><span class="pre">Io</span></tt></a> &#8212; I/O watcher<a class="headerlink" href="#io-i-o-watcher" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyev.Io">
+<em class="property">class </em><tt class="descclassname">pyev.</tt><tt class="descname">Io</tt><big>(</big><em>fd</em>, <em>events</em>, <em>loop</em>, <em>callback</em><span class="optional">[</span>, <em>data=None</em>, <em>priority=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Io" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fd</strong> &#8211; the file descriptor to be monitored, can be an <tt class="xref py py-class docutils literal"><span class="pre">int</span></tt> or
+any Python object having a <tt class="xref py py-meth docutils literal"><span class="pre">fileno()</span></tt> method.</li>
+<li><strong>events</strong> (<em>int</em>) &#8211; either <a class="reference internal" href="Watcher.html#pyev.EV_READ" title="pyev.EV_READ"><tt class="xref py py-const docutils literal"><span class="pre">EV_READ</span></tt></a>, <a class="reference internal" href="Watcher.html#pyev.EV_WRITE" title="pyev.EV_WRITE"><tt class="xref py py-const docutils literal"><span class="pre">EV_WRITE</span></tt></a> or
+<a class="reference internal" href="Watcher.html#pyev.EV_READ" title="pyev.EV_READ"><tt class="xref py py-const docutils literal"><span class="pre">EV_READ</span></tt></a> | <a class="reference internal" href="Watcher.html#pyev.EV_WRITE" title="pyev.EV_WRITE"><tt class="xref py py-const docutils literal"><span class="pre">EV_WRITE</span></tt></a>.</li>
+<li><strong>loop</strong> (<a class="reference internal" href="Loop.html#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a>) &#8211; loop object responsible for this watcher (accessible through
+<a class="reference internal" href="Watcher.html#pyev.Watcher.loop" title="pyev.Watcher.loop"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.loop</span></tt></a>).</li>
+<li><strong>callback</strong> (<em>callable</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.callback" title="pyev.Watcher.callback"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.callback</span></tt></a>.</li>
+<li><strong>data</strong> (<em>object</em>) &#8211; any Python object you might want to attach to the
+watcher (stored in <a class="reference internal" href="Watcher.html#pyev.Watcher.data" title="pyev.Watcher.data"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.data</span></tt></a>).</li>
+<li><strong>priority</strong> (<em>int</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.priority" title="pyev.Watcher.priority"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.priority</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#pyev.Io" title="pyev.Io"><tt class="xref py py-class docutils literal"><span class="pre">Io</span></tt></a> watchers check whether a file descriptor is readable or
+writable in each iteration of the event loop, or, more precisely, when
+reading would not block the process and writing would at least be able to
+write some data. This behaviour is called level-triggering because you keep
+receiving events as long as the condition persists. Remember you can stop
+the watcher if you don&#8217;t want to act on the event and neither want to
+receive future events.</p>
+<p>In general you can register as many read and/or write event watchers per fd
+as you want. Setting all file descriptors to non-blocking mode is also
+usually a good idea (but not required).</p>
+<p>Another thing you have to watch out for is that it is quite easy to receive
+&#8220;spurious&#8221; readiness notifications, that is, your callback might be called
+with <a class="reference internal" href="Watcher.html#pyev.EV_READ" title="pyev.EV_READ"><tt class="xref py py-const docutils literal"><span class="pre">EV_READ</span></tt></a> but a subsequent <tt class="xref c c-func docutils literal"><span class="pre">read()</span></tt> will actually block
+because there is no data. It is very easy to get into this situation even
+with a relatively standard program structure. Thus it is best to always use
+non-blocking I/O: An extra <tt class="xref c c-func docutils literal"><span class="pre">read()</span></tt> returning <tt class="xref c c-data docutils literal"><span class="pre">EAGAIN</span></tt> is far
+preferable to a program hanging until some data arrives.</p>
+<p>If you cannot run the fd in non-blocking mode, then you have to separately
+re-test whether a file descriptor is really ready with a known-to-be good
+interface such as poll. Some people additionally use <tt class="xref c c-data docutils literal"><span class="pre">SIGALRM</span></tt> and
+an interval timer, just to be sure you won&#8217;t block indefinitely.</p>
+<p>But really, best use non-blocking mode.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#code_ev_io_code_is_this_file_descrip">ev_io - is this file descriptor readable or writable?</a></p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problem_of_disappearing_">The special problem of disappearing file descriptors</a></li>
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problem_of_dup_ed_file_d">The special problem of dup&#8217;ed file descriptors</a></li>
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problem_of_files">The special problem of files</a></li>
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problem_of_fork">The special problem of fork</a></li>
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problem_of_SIGPIPE">The special problem of SIGPIPE</a></li>
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problem_of_accept_ing_wh">The special problem of accept()ing when you can&#8217;t</a></li>
+</ul>
+</div></blockquote>
+</div>
+<dl class="method">
+<dt id="pyev.Io.set">
+<tt class="descname">set</tt><big>(</big><em>fd</em>, <em>events</em><big>)</big><a class="headerlink" href="#pyev.Io.set" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>fd</strong> &#8211; the file descriptor to be monitored, can be an <tt class="xref py py-class docutils literal"><span class="pre">int</span></tt>
+or any Python object having a <tt class="xref py py-meth docutils literal"><span class="pre">fileno()</span></tt> method.</li>
+<li><strong>events</strong> (<em>int</em>) &#8211; either <a class="reference internal" href="Watcher.html#pyev.EV_READ" title="pyev.EV_READ"><tt class="xref py py-const docutils literal"><span class="pre">EV_READ</span></tt></a>, <a class="reference internal" href="Watcher.html#pyev.EV_WRITE" title="pyev.EV_WRITE"><tt class="xref py py-const docutils literal"><span class="pre">EV_WRITE</span></tt></a> or
+<a class="reference internal" href="Watcher.html#pyev.EV_READ" title="pyev.EV_READ"><tt class="xref py py-const docutils literal"><span class="pre">EV_READ</span></tt></a> | <a class="reference internal" href="Watcher.html#pyev.EV_WRITE" title="pyev.EV_WRITE"><tt class="xref py py-const docutils literal"><span class="pre">EV_WRITE</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Configures the watcher.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Io.fd">
+<tt class="descname">fd</tt><a class="headerlink" href="#pyev.Io.fd" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>The file descriptor being watched.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Io.events">
+<tt class="descname">events</tt><a class="headerlink" href="#pyev.Io.events" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>The events being watched.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Watcher.html"
+                        title="previous chapter">Watchers</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Timer.html"
+                        title="next chapter"><tt class="docutils literal"><span class="pre">Timer</span></tt> &#8212; Timer watcher</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Io.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Timer.html" title="Timer — Timer watcher"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Watcher.html" title="Watchers"
+             >previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" >Watchers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>

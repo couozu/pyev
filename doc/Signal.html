@@ -1,0 +1,191 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Signal — Signal watcher &mdash; pyev 0.9.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/rtd.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.9.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="pyev 0.9.0 documentation" href="index.html" />
+    <link rel="up" title="Watchers" href="Watcher.html" />
+    <link rel="next" title="Child — Child watcher" href="Child.html" />
+    <link rel="prev" title="Scheduler — Scheduler watcher" href="Scheduler.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Child.html" title="Child — Child watcher"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Scheduler.html" title="Scheduler — Scheduler watcher"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" accesskey="U">Watchers</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="signal-signal-watcher">
+<span id="signal"></span><h1><a class="reference internal" href="#pyev.Signal" title="pyev.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> &#8212; Signal watcher<a class="headerlink" href="#signal-signal-watcher" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="pyev.Signal">
+<em class="property">class </em><tt class="descclassname">pyev.</tt><tt class="descname">Signal</tt><big>(</big><em>signum</em>, <em>loop</em>, <em>callback</em><span class="optional">[</span>, <em>data=None</em>, <em>priority=0</em><span class="optional">]</span><big>)</big><a class="headerlink" href="#pyev.Signal" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>signum</strong> (<em>int</em>) &#8211; the signal number to monitor.</li>
+<li><strong>loop</strong> (<a class="reference internal" href="Loop.html#pyev.Loop" title="pyev.Loop"><tt class="xref py py-class docutils literal"><span class="pre">Loop</span></tt></a>) &#8211; loop object responsible for this watcher (accessible through
+<a class="reference internal" href="Watcher.html#pyev.Watcher.loop" title="pyev.Watcher.loop"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.loop</span></tt></a>).</li>
+<li><strong>callback</strong> (<em>callable</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.callback" title="pyev.Watcher.callback"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.callback</span></tt></a>.</li>
+<li><strong>data</strong> (<em>object</em>) &#8211; any Python object you might want to attach to the
+watcher (stored in <a class="reference internal" href="Watcher.html#pyev.Watcher.data" title="pyev.Watcher.data"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.data</span></tt></a>).</li>
+<li><strong>priority</strong> (<em>int</em>) &#8211; See <a class="reference internal" href="Watcher.html#pyev.Watcher.priority" title="pyev.Watcher.priority"><tt class="xref py py-attr docutils literal"><span class="pre">Watcher.priority</span></tt></a>.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#pyev.Signal" title="pyev.Signal"><tt class="xref py py-class docutils literal"><span class="pre">Signal</span></tt></a> watchers will trigger an event when the process receives
+a specific signal one or more times. Even though signals are very
+asynchronous, libev will try its best to deliver signals synchronously,
+i.e. as part of the normal event processing, like any other event.</p>
+<p>You can configure as many watchers as you like for the same signal, but only
+within the same loop, i.e. you can watch for <tt class="xref c c-data docutils literal"><span class="pre">SIGINT</span></tt> in the
+<em>default loop</em> and for <tt class="xref c c-data docutils literal"><span class="pre">SIGIO</span></tt> in another loop, but you cannot watch
+for <tt class="xref c c-data docutils literal"><span class="pre">SIGINT</span></tt> in both the <em>default loop</em> and another loop at the same
+time. At the moment, <tt class="xref c c-data docutils literal"><span class="pre">SIGCHLD</span></tt> is permanently tied to the <em>default
+loop</em>.</p>
+<p>If possible and supported, libev will install its handlers with
+<tt class="xref c c-data docutils literal"><span class="pre">SA_RESTART</span></tt> (or equivalent) behaviour enabled, so system calls
+should not be unduly interrupted. If you have a problem with system calls
+getting interrupted by signals you can block all signals in a
+<a class="reference internal" href="Prepare_Check.html#pyev.Check" title="pyev.Check"><tt class="xref py py-class docutils literal"><span class="pre">Check</span></tt></a> watcher and unblock  them in a <a class="reference internal" href="Prepare_Check.html#pyev.Prepare" title="pyev.Prepare"><tt class="xref py py-class docutils literal"><span class="pre">Prepare</span></tt></a> watcher.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#code_ev_signal_code_signal_me_when_a">ev_signal - signal me when a signal gets signaled!</a></p>
+<blockquote class="last">
+<div><ul class="simple">
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problem_of_inheritance_o">The special problem of inheritance over fork/execve/pthread_create</a></li>
+<li><a class="reference external" href="http://pod.tst.eu/http://cvs.schmorp.de/libev/ev.pod#The_special_problem_of_threads_signa">The special problem of threads signal handling</a></li>
+</ul>
+</div></blockquote>
+</div>
+<dl class="method">
+<dt id="pyev.Signal.set">
+<tt class="descname">set</tt><big>(</big><em>signum</em><big>)</big><a class="headerlink" href="#pyev.Signal.set" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>signum</strong> (<em>int</em>) &#8211; the signal number to monitor.</td>
+</tr>
+</tbody>
+</table>
+<p>Configures the watcher.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="pyev.Signal.signum">
+<tt class="descname">signum</tt><a class="headerlink" href="#pyev.Signal.signum" title="Permalink to this definition">¶</a></dt>
+<dd><p><em>Read only</em></p>
+<p>The signal number being monitored.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Scheduler.html"
+                        title="previous chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">Scheduler</span></tt> &#8212; Scheduler watcher</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Child.html"
+                        title="next chapter"><tt class="docutils literal docutils literal docutils literal"><span class="pre">Child</span></tt> &#8212; Child watcher</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/Signal.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="Child.html" title="Child — Child watcher"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Scheduler.html" title="Scheduler — Scheduler watcher"
+             >previous</a> |</li>
+        <li><a href="index.html">pyev 0.9.0 documentation</a> &raquo;</li>
+          <li><a href="pyev.html" ><tt class="docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal docutils literal"><span class="pre">pyev</span></tt> &#8212; Python libev interface.</a> &raquo;</li>
+          <li><a href="Watcher.html" >Watchers</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2013, Malek Hadj-Ali.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+    </div>
+  </body>
+</html>
